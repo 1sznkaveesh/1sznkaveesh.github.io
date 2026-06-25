@@ -1,129 +1,256 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+/* Premium TextZip Colorway & Fluid Typography Definitions */
+:root {
+    --bg-main: #0b0f17;
+    --bg-sidebar: #0f141f;
+    --bg-card: #141b29;
+    --border-line: #1e2638;
+    --text-primary: #f1f5f9;
+    --text-muted: #94a3b8;
+    --accent: #4f8cff;
+    --font-heading: 'Space Grotesk', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
 }
 
-html{
-scroll-behavior:smooth;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-background:#111;
-color:white;
+html {
+    scroll-behavior: smooth;
+    background-color: var(--bg-main);
 }
 
-nav{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-
-padding:25px 80px;
-
-background:#1a1a1a;
-
-position:sticky;
-top:0;
-
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
 }
 
-nav ul{
-
-display:flex;
-gap:30px;
-
-list-style:none;
-
+/* 2-Column Scaffold Structure */
+.app-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
 }
 
-nav a{
-
-color:white;
-text-decoration:none;
-
+/* Sidebar Styling Layout */
+.app-sidebar {
+    width: 300px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.hero{
-
-height:90vh;
-
-display:flex;
-flex-direction:column;
-
-justify-content:center;
-align-items:center;
-
-text-align:center;
-
-padding:30px;
-
+/* Made your name significantly bigger and punchier */
+.logo-title {
+    font-family: var(--font-heading);
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -.5px;
+    color: var(--text-primary);
+    line-height: 1.2;
 }
 
-.hero h1{
-
-font-size:60px;
-
+.meta-tagline {
+    color: var(--text-muted);
+    margin-top: 16px;
+    font-size: 13.5px;
+    line-height: 1.5;
 }
 
-.hero h2{
-
-margin:20px 0;
-
-font-weight:300;
-
+.app-nav {
+    margin-top: 54px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.button{
-
-margin-top:35px;
-
-padding:15px 35px;
-
-background:#4f8cff;
-
-border-radius:8px;
-
-color:white;
-
-text-decoration:none;
-
+.nav-btn {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.25s ease;
+    padding: 4px 0;
+    width: fit-content;
 }
 
-section{
-
-padding:100px 80px;
-
+.nav-btn:hover, .nav-btn.active {
+    color: var(--accent);
+    transform: translateX(4px);
 }
 
-.cards{
-
-display:grid;
-
-grid-template-columns:
-repeat(auto-fit,minmax(280px,1fr));
-
-gap:30px;
-
-margin-top:40px;
-
+/* Right Content Column Layout */
+.app-main-content {
+    flex-grow: 1;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
 }
 
-.card{
-
-background:#1f1f1f;
-
-padding:25px;
-
-border-radius:12px;
-
-transition:.3s;
-
+.content-block {
+    scroll-margin-top: 60px;
 }
 
-.card:hover{
+.block-header {
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--border-line);
+    padding-bottom: 14px;
+}
 
-transform:translateY(-8px);
+/* Increased major section title sizing */
+.block-heading {
+    font-family: var(--font-heading);
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--text-primary);
+}
 
+/* Smooth Minimal Box States */
+.empty-state-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-line);
+    border-radius: 8px;
+    padding: 24px;
+}
+
+.empty-msg {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+/* Cards System Architecture */
+.project-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.project-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-line);
+    border-radius: 8px;
+    padding: 28px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(79, 140, 255, 0.05);
+}
+
+.card-meta {
+    font-size: 11px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card-tag {
+    color: var(--accent);
+}
+
+/* Increased work project title sizing */
+.card-title {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+}
+
+/* Project Heading Anchor Rules */
+.project-title-link {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.project-card:hover .project-title-link,
+.project-title-link:hover {
+    color: var(--accent);
+}
+
+.card-desc {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Resume Button Setup */
+.utility-download-btn {
+    display: inline-block;
+    color: #fff;
+    background-color: var(--accent);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.utility-download-btn:hover {
+    background-color: #3b71d6;
+    transform: translateY(-1px);
+}
+
+/* Side-by-Side Horizontal Contact Layout */
+.contact-inline-row {
+    display: flex;
+    gap: 36px;
+}
+
+.contact-link {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease;
+}
+
+.contact-link:hover {
+    color: var(--text-primary);
+}
+
+/* Fluid Scalability Handlers */
+@media (max-width: 850px) {
+    .app-container {
+        flex-direction: column;
+    }
+    .app-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 40px 24px 20px 24px;
+    }
+    .app-nav {
+        margin-top: 24px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+    .app-main-content {
+        padding: 20px 24px 40px 24px;
+        gap: 48px;
+    }
 }

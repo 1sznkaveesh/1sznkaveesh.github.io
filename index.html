@@ -1,139 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Kaveesh | Robotics Engineer</title>
-
-<link rel="stylesheet" href="style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaveesh | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<nav>
+    <div class="app-container">
+        
+        <aside class="app-sidebar">
+            <div class="sidebar-top">
+                <div class="brand-group">
+                    <h1 class="logo-title">KAVEESH CHAUDHARI</h1>
+                </div>
+                <p class="meta-tagline">Hey, I'm Kaveesh! I'm currently in my 2nd year at BITS Pilani, Hyderabad Campus and exploring the world of robotics. My first year was all about trial & error stepping foot into various softwares and core robotics topics just to see what sticks. I'm early in my journey, highly driven to expand my skillset and looking for hands-on opportunities to learn from real-world engineering challenges!</p>
+                
+                <nav class="app-nav">
+                    <a href="#blog" class="nav-btn active">BLOGS / POSTS</a>
+                    <a href="#projects" class="nav-btn">FEATURED WORK</a>
+                    <a href="#resume" class="nav-btn">RESUME</a>
+                    <a href="#contact" class="nav-btn">CONTACT</a>
+                </nav>
+            </div>
+        </aside>
 
-<div class="logo">
-KAVEESH
-</div>
+        <main class="app-main-content">
+            
+            <section id="blog" class="content-block">
+                <div class="block-header">
+                    <h2 class="block-heading">Blogs / Posts</h2>
+                </div>
+                <div class="block-body">
+                    <div class="empty-state-card">
+                        <p class="empty-msg">Currently in making!</p>
+                    </div>
+                </div>
+            </section>
 
-<ul>
+            <section id="projects" class="content-block">
+                <div class="block-header">
+                    <h2 class="block-heading">Featured Work</h2>
+                </div>
+                <div class="block-body project-grid">
+                    
+                    <div class="project-card">
+                        <div class="card-meta">
+                            <span class="card-tag">Multi-Agent Systems</span>
+                        </div>
+                        <h3 class="card-title"><a href="projects/swarm.html" class="project-title-link">Swarm Robotics System</a></h3>
+                        <p class="card-desc">An implementation exploring decentralized coordination, spatial organization, and multi-agent consensus algorithms for networked robotic units.</p>
+                    </div>
 
-<li><a href="#about">About</a></li>
-<li><a href="#projects">Projects</a></li>
-<li><a href="#blog">Blog</a></li>
-<li><a href="#contact">Contact</a></li>
+                    <div class="project-card">
+                        <div class="card-meta">
+                            <span class="card-tag">Computer Vision / ROS2</span>
+                        </div>
+                        <h3 class="card-title"><a href="projects/slam.html" class="project-title-link">Camera-Only SLAM Robot</a></h3>
+                        <p class="card-desc">Simultaneous Localization and Mapping on a mobile differential drive platform utilizing pure visual feature odometry, breaking dependency on traditional LiDAR hardware.</p>
+                    </div>
 
-</ul>
+                    <div class="project-card">
+                        <div class="card-meta">
+                            <span class="card-tag">Hardware Telemetry</span>
+                        </div>
+                        <h3 class="card-title"><a href="projects/simbridge.html" class="project-title-link">F1 Sim Rig Telemetry Bridge</a></h3>
+                        <p class="card-desc">A real-time game data parser designed to ingest high-frequency racing telemetry streams and map data straight into physical servo mixes and custom driver modules.</p>
+                    </div>
 
-</nav>
+                </div>
+            </section>
 
-<section class="hero">
+            <section id="resume" class="content-block">
+                <div class="block-header">
+                    <h2 class="block-heading">Resume</h2>
+                </div>
+                <div class="block-body">
+                    <div class="resume-wrapper">
+                        <div class="download-container">
+                            <a href="https://drive.google.com/file/d/1YzNbqaZga04g1VmT99eA1GoM8J6YmYJ5/view?usp=sharing" target="_blank" class="utility-download-btn">CV / RESUME</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-<h1>Hello, I'm Kaveesh.</h1>
+            <section id="contact" class="content-block">
+                <div class="block-header">
+                    <h2 class="block-heading">Contact</h2>
+                </div>
+                <div class="block-body">
+                    <div class="contact-inline-row">
+                        <a href="https://github.com/1sznkaveesh" target="_blank" class="contact-link">GITHUB</a>
+                        <a href="https://www.linkedin.com/in/kaveesh-chaudhari-2136822a4/" target="_blank" class="contact-link">LINKEDIN</a>
+                    </div>
+                </div>
+            </section>
 
-<h2>
-Robotics • AI • Machine Learning
-</h2>
+        </main>
+        
+    </div>
 
-<p>
-I build autonomous robots, evolutionary AI systems,
-ROS2 applications and MuJoCo simulations.
-</p>
-
-<a href="#projects" class="button">
-View Projects
-</a>
-
-</section>
-
-<section id="about">
-
-<h2>About</h2>
-
-<p>
-
-I'm passionate about robotics,
-simulation,
-reinforcement learning,
-NEAT,
-computer vision,
-and autonomous navigation.
-
-</p>
-
-</section>
-
-<section id="projects">
-
-<h2>Featured Projects</h2>
-
-<div class="cards">
-
-<div class="card">
-
-<h3>🚁 NEAT Bicopter</h3>
-
-<p>
-Evolutionary neural networks controlling a bicopter inside MuJoCo.
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>🤖 ROS2 SLAM Robot</h3>
-
-<p>
-Autonomous differential drive robot using RTABMap and Nav2.
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>🧠 MuJoCo Research</h3>
-
-<p>
-Physics simulation experiments and AI training.
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="blog">
-
-<h2>Blog</h2>
-
-<p>
-
-Coming Soon.
-
-</p>
-
-</section>
-
-<section id="contact">
-
-<h2>Contact</h2>
-
-<p>
-
-GitHub:
-<a href="https://github.com/1sznkaveesh">
-github.com/1sznkaveesh
-</a>
-
-</p>
-
-</section>
-
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>

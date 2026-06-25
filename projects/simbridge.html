@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Sim Rig Telemetry Bridge | Kaveesh</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 32px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-family: var(--font-heading);
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+        .back-btn:hover {
+            color: var(--accent);
+        }
+        .project-body-text {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.8;
+            max-width: 800px;
+        }
+        .project-body-text p {
+            margin-bottom: 24px;
+        }
+        .status-badge {
+            display: inline-block;
+            background: rgba(79, 140, 255, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-family: var(--font-heading);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 6px 14px;
+            border-radius: 4px;
+            margin-bottom: 24px;
+        }
+        .todo-box {
+            background: var(--bg-card);
+            border-left: 3px solid var(--accent);
+            padding: 20px;
+            margin: 32px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .todo-title {
+            font-family: var(--font-heading);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .todo-list {
+            margin-left: 18px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        .todo-list li {
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <aside class="app-sidebar">
+            <div class="sidebar-top">
+                <div class="brand-group">
+                    <h1 class="logo-title">KAVEESH</h1>
+                </div>
+                <p class="meta-tagline">Project Breakdown Case Sheet.</p>
+                <nav class="app-nav">
+                    <a href="../index.html" class="nav-btn">← RETURN HOME</a>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="app-main-content">
+            <article class="content-block">
+                <a href="../index.html" class="back-btn">← Back to Dashboard</a>
+                
+                <div class="block-header">
+                    <h2 class="block-heading">F1 Sim Rig Telemetry Bridge</h2>
+                </div>
+                
+                <div class="project-body-text">
+                    <div class="status-badge">Active Deployment / Updates Ongoing</div>
+                    
+                    <p>This codebase builds out the core software translation layer for a motion simulation flight and racing rig. Designed directly around the Assetto Corsa physics engine ecosystem, the framework establishes high-frequency hooks to intercept real-time game telemetry data packet matrices.</p>
+                    
+                    <p>Once caught, the bridge parses live acceleration vector sheets, angular velocities, and structural vibration values, converting raw simulator outputs into direct control instructions to drive external physical motion mechanisms.</p>
+
+                    <div class="todo-box">
+                        <div class="todo-title">Development Roadmap</div>
+                        <ul class="todo-list">
+                            <li>Integration of complete custom SMC3 hardware driver configurations.</li>
+                            <li>Custom making our own SMC3 mixer.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="margin-top: 32px;">
+                    <a href="https://github.com/1sznkaveesh/F1_Sim_Rig_Bridge" target="_blank" class="utility-download-btn">To GitHub →</a>
+                </div>
+            </article>
+        </main>
+        
+    </div>
+
+</body>
+</html>

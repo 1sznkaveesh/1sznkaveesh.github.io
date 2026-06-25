@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera-Only 6-Wheeled Rover SLAM | Kaveesh</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 32px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-family: var(--font-heading);
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+        .back-btn:hover {
+            color: var(--accent);
+        }
+        .project-body-text {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.8;
+            max-width: 800px;
+        }
+        .project-body-text p {
+            margin-bottom: 24px;
+        }
+        .media-container {
+            margin: 32px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            max-width: 800px;
+        }
+        .media-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-line);
+            border-radius: 8px;
+            padding: 16px;
+        }
+        .media-label {
+            font-family: var(--font-heading);
+            font-size: 12px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        .demo-img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <aside class="app-sidebar">
+            <div class="sidebar-top">
+                <div class="brand-group">
+                    <h1 class="logo-title">KAVEESH</h1>
+                </div>
+                <p class="meta-tagline">Project Breakdown Case Sheet.</p>
+                <nav class="app-nav">
+                    <a href="../index.html" class="nav-btn">← RETURN HOME</a>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="app-main-content">
+            <article class="content-block">
+                <a href="../index.html" class="back-btn">← Back to Dashboard</a>
+                
+                <div class="block-header">
+                    <h2 class="block-heading">Camera-Only 6-Wheeled Rover SLAM</h2>
+                </div>
+                
+                <div class="project-body-text">
+                    <p>This project features the implementation of Simultaneous Localization and Mapping (SLAM) configurations mapped directly onto a 6-wheeled mobile rover platform within simulated environments. By moving entirely away from active LiDAR configurations, the tracking array utilizes camera sensors to construct spatial loops.</p>
+                    
+                    <p>Using ROS2 nodes tied to RTAB-Map interfaces, the rover parses image and depth arrays concurrently. This allows it to compute dense 3D point clouds, trace feature point odometry updates, and build clear occupancy grids over structural corridors during active exploration runs.</p>
+                </div>
+
+                <div class="media-container">
+                    <div class="media-box">
+                        <div class="media-label">RTAB-Map Loop Closure & Odometry Diagnostics</div>
+                        <img src="slamdeck.png" alt="RTAB-Map Diagnostics Screen" class="demo-img">
+                    </div>
+                </div>
+
+                <div style="margin-top: 24px;">
+                    <a href="https://github.com/1sznkaveesh/Mobile-Differential-Drive-Robot_SLAM" target="_blank" class="utility-download-btn">To GitHub →</a>
+                </div>
+            </article>
+        </main>
+        
+    </div>
+
+</body>
+</html>
