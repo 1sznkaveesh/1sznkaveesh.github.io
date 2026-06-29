@@ -79,7 +79,7 @@
                 <div class="brand-group">
                     <h1 class="logo-title">KAVEESH</h1>
                 </div>
-                <p class="meta-tagline">Project Breakdown Case Sheet.</p>
+                <p class="meta-tagline">Project Breakdown.</p>
                 <nav class="app-nav">
                     <a href="../index.html" class="nav-btn">← RETURN HOME</a>
                 </nav>
@@ -95,23 +95,50 @@
                 </div>
                 
                 <div class="project-body-text">
-                    <div class="status-badge">Active Deployment / Updates Ongoing</div>
-                    
-                    <p>This codebase builds out the core software translation layer for a motion simulation flight and racing rig. Designed directly around the Assetto Corsa physics engine ecosystem, the framework establishes high-frequency hooks to intercept real-time game telemetry data packet matrices.</p>
-                    
-                    <p>Once caught, the bridge parses live acceleration vector sheets, angular velocities, and structural vibration values, converting raw simulator outputs into direct control instructions to drive external physical motion mechanisms.</p>
+    <div class="status-badge" style="margin-bottom: 16px;">Active Deployment / Updates Ongoing</div>
 
-                    <div class="todo-box">
-                        <div class="todo-title">Development Roadmap</div>
-                        <ul class="todo-list">
-                            <li>Integration of complete custom SMC3 hardware driver configurations.</li>
-                            <li>Custom making our own SMC3 mixer.</li>
-                        </ul>
-                    </div>
-                </div>
+    <p style="margin-bottom: 16px;">
+        This codebase builds out the core software translation layer for a motion simulation racing rig. Designed directly around the Assetto Corsa physics engine ecosystem, the framework establishes high-frequency hooks to intercept real-time game telemetry data packet matrices to drive external physical motion mechanisms.
+    </p>
+
+    <hr style="border: 0; border-top: 1px solid var(--border-line); margin: 20px 0;">
+
+    <h3 style="margin-top: 0; margin-bottom: 12px;">F1 Simulator Rig Architecture</h3>
+    <p style="margin-bottom: 16px;">
+        The layout uses localized matrix coefficients to blend incoming structural demands and translate simulation states directly to physical motor positions:
+    </p>
+    
+    <ul style="list-style-type: none; padding-left: 0; display: flex; flex-direction: column; gap: 16px; margin-bottom: 0;">
+        <li style="padding-left: 16px; border-left: 2px solid var(--accent);">
+            <strong>Telemetry Processing Layer</strong>
+            <p style="margin-top: 4px; margin-bottom: 0; font-size: 14px;">
+                Designed a custom Python telemetry mixer script to interface with the Assetto Corsa API. The framework parses live acceleration vector sheets, orientation angles, and dynamic force variables directly from the core game physics engine.
+            </p>
+        </li>
+        <li style="padding-left: 16px; border-left: 2px solid var(--accent);">
+            <strong>Hardware Communication Bridge</strong>
+            <p style="margin-top: 4px; margin-bottom: 0; font-size: 14px;">
+                Streamlined real-time telemetry distribution by piping calculated target parameters directly via a serial USB link. This feeds instruction arrays to an Arduino Uno running the SMC3 utility for closed-loop motor driver control.
+            </p>
+        </li>
+        <li style="padding-left: 16px; border-left: 2px solid var(--accent);">
+            <strong>Actuator Matrix Mixing</strong>
+            <p style="margin-top: 4px; margin-bottom: 0; font-size: 14px;">
+                Routes synchronized game physics states into mixed actuator control signals. For example, pitch configurations scale load requirements evenly across channels, while roll vectors shift the balance inversely to map targets directly to PID controller arrays.
+            </p>
+        </li>
+    </ul>
+
+    <hr style="border: 0; border-top: 1px solid var(--border-line); margin: 24px 0;">
+
+    <h3 style="margin-top: 0; margin-bottom: 12px;">Development Roadmap</h3>
+    <p style="margin-bottom: 0;">
+        Current optimization tasks involve fine-tuning localized matrix coefficients within the Python mixing logic to isolate high-frequency structural vibrations from primary macro-positioning movements. This ensures precise tracking stability under rapid multi-axis load changes.
+    </p>
+</div>
 
                 <div style="margin-top: 32px;">
-                    <a href="https://github.com/1sznkaveesh/F1_Sim_Rig_Bridge" target="_blank" class="utility-download-btn">To GitHub →</a>
+                    <a href="https://github.com/1sznkaveesh/F1_Sim_Rig_Bridge" target="_blank" class="utility-download-btn">To GitHub ( Updating soon! ) →</a>
                 </div>
             </article>
         </main>

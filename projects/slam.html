@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camera-Only 6-Wheeled Rover SLAM | Kaveesh</title>
+    <title>Autonomous Navigation with camera-only SLAM Robot | Kaveesh</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -69,7 +69,7 @@
                 <div class="brand-group">
                     <h1 class="logo-title">KAVEESH</h1>
                 </div>
-                <p class="meta-tagline">Project Breakdown Case Sheet.</p>
+                <p class="meta-tagline">Project Breakdown.</p>
                 <nav class="app-nav">
                     <a href="../index.html" class="nav-btn">← RETURN HOME</a>
                 </nav>
@@ -81,21 +81,57 @@
                 <a href="../index.html" class="back-btn">← Back to Dashboard</a>
                 
                 <div class="block-header">
-                    <h2 class="block-heading">Camera-Only 6-Wheeled Rover SLAM</h2>
+                    <h2 class="block-heading">Autonomous Navigation with camera-only SLAM Robot</h2>
                 </div>
                 
-                <div class="project-body-text">
-                    <p>This project features the implementation of Simultaneous Localization and Mapping (SLAM) configurations mapped directly onto a 6-wheeled mobile rover platform within simulated environments. By moving entirely away from active LiDAR configurations, the tracking array utilizes camera sensors to construct spatial loops.</p>
-                    
-                    <p>Using ROS2 nodes tied to RTAB-Map interfaces, the rover parses image and depth arrays concurrently. This allows it to compute dense 3D point clouds, trace feature point odometry updates, and build clear occupancy grids over structural corridors during active exploration runs.</p>
-                </div>
-
                 <div class="media-container">
                     <div class="media-box">
                         <div class="media-label">RTAB-Map Loop Closure & Odometry Diagnostics</div>
                         <img src="slamdeck.png" alt="RTAB-Map Diagnostics Screen" class="demo-img">
                     </div>
                 </div>
+
+                <div class="project-body-text">
+
+    <p style="margin-bottom: 16px;">
+        This project features the implementation of Simultaneous Localization and Mapping (SLAM) configurations mapped directly onto a 6-wheeled mobile rover platform within simulated environments. By moving entirely away from active LiDAR configurations, the tracking array utilizes camera sensors to construct spatial loops.
+    </p>
+
+    <hr style="border: 0; border-top: 1px solid var(--border-line); margin: 20px 0;">
+
+    <h3 style="margin-top: 0; margin-bottom: 12px;">Autonomous Systems & Perception</h3>
+    <p style="margin-bottom: 16px;">
+        Using ROS2 nodes tied to RTAB-Map interfaces, the rover parses image and depth arrays concurrently to handle localization and environmental feature extraction:
+    </p>
+    
+    <ul style="list-style-type: none; padding-left: 0; display: flex; flex-direction: column; gap: 16px; margin-bottom: 0;">
+        <li style="padding-left: 16px; border-left: 2px solid var(--accent);">
+            <strong>3D Perception Pipeline</strong>
+            <p style="margin-top: 4px; margin-bottom: 0; font-size: 14px;">
+                Engineered a continuous 3D mapping and localization loop processing simulated point clouds. This data is fed directly via a virtual Intel RealSense D455 depth camera plugin to compute dense 3D point clouds and trace occupancy grids.
+            </p>
+        </li>
+        <li style="padding-left: 16px; border-left: 2px solid var(--accent);">
+            <strong>Nav2 Stack Integration</strong>
+            <p style="margin-top: 4px; margin-bottom: 0; font-size: 14px;">
+                Configured the Nav2 navigation stack to parse the generated SLAM maps dynamically. This allows the system to calculate precise end-destination goal vectors and execute global path planning routines within structural corridors.
+            </p>
+        </li>
+        <li style="padding-left: 16px; border-left: 2px solid var(--accent);">
+            <strong>Clock Synchronization</strong>
+            <p style="margin-top: 4px; margin-bottom: 0; font-size: 14px;">
+                Synchronized simulation clock timing parameters across active ROS2 nodes. Eliminating discrepancies here prevents localization drifting and ensures tight data alignment between virtual camera sensor streams and the mapping engine.
+            </p>
+        </li>
+    </ul>
+
+    <hr style="border: 0; border-top: 1px solid var(--border-line); margin: 24px 0;">
+
+    <h3 style="margin-top: 0; margin-bottom: 12px;">Loop Closure Diagnostics</h3>
+    <p style="margin-bottom: 0;">
+        Through real-time feature point tracking, the architecture detects previously visited locations to assert loop closures. This system corrects accumulating odometry errors instantaneously, maintaining global coordinate map integrity even during long exploration runs within the Gazebo environment.Through real-time feature point tracking—visible as the dense cluster of green tracking indicators over key geometric structures in the simulation monitor—the architecture continuously registers unique visual landmarks. By evaluating these point matrices against historical frame pairs, the system detects previously visited locations to assert loop closures. This corrects accumulating odometry errors instantaneously, maintaining global coordinate map integrity even during long exploration runs.
+    </p>
+</div>
 
                 <div style="margin-top: 24px;">
                     <a href="https://github.com/1sznkaveesh/Mobile-Differential-Drive-Robot_SLAM" target="_blank" class="utility-download-btn">To GitHub →</a>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swarm Robotics | Kaveesh</title>
+    <title>Multi-Agent Swarm | Kaveesh</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -84,7 +84,7 @@
                 <div class="brand-group">
                     <h1 class="logo-title">KAVEESH CHAUDHARI</h1>
                 </div>
-                <p class="meta-tagline">Project Breakdown Case Sheet.</p>
+                <p class="meta-tagline">Project Breakdown.</p>
                 <nav class="app-nav">
                     <a href="../index.html" class="nav-btn">← RETURN HOME</a>
                 </nav>
@@ -96,21 +96,13 @@
                 <a href="../index.html" class="back-btn">← Back to Dashboard</a>
                 
                 <div class="block-header">
-                    <h2 class="block-heading">Swarm Robotics System</h2>
-                </div>
-                
-                <div class="project-body-text">
-                    <div class="status-badge">Active Deployment / Updates Ongoing</div>
-
-                    <p>This project is focused on exploring decentralized coordination algorithms specifically tailored for smaller-scale swarm environments. Rather than heavily relying on a single complex control node, the objective is to let individual multi-agent units build grid consensus locally through peer communication networks.</p>
-                    
-                    <p>By mapping simple interaction structures, the units can optimize path-routing and schedule adjustments layout dynamically without processing overhead spikes.</p>
+                    <h2 class="block-heading">Multi-Agent Swarm Robotics</h2>
                 </div>
 
                 <div class="media-container">
                     
                     <div class="media-box">
-                        <div class="media-label">Simulation Flight Deck Monitor</div>
+                        <div class="media-label">Simulation Monitor</div>
                         <video controls preload="metadata">
                             <source src="Screen Recording 2026-06-22 095144.mp4" type="video/mp4">
                             Your browser does not support the video tag.
@@ -118,6 +110,74 @@
                     </div>
 
                 </div>
+                
+                <div class="project-body-text">
+    <div class="status-badge" style="margin-bottom: 16px;">Active Deployment / Updates Ongoing</div>
+
+    <p style="margin-bottom: 16px;">
+        This project explores decentralized path-planning and coordination algorithms tailored for multi-agent, small-scale swarm robotics. Instead of relying on a centralized controller that introduces a single point of failure and high processing overhead, this architecture empowers individual agents to execute localized grid-based pathfinding dynamically. The system is designed around discrete grid synchronization, enabling scalable multi-robot routing without large performance spikes.
+    </p>
+
+    <hr style="border: 0; border-top: 1px solid var(--border-line); margin: 20px 0;">
+
+    <h3 style="margin-top: 0; margin-bottom: 12px;">Core Architectural Components</h3>
+    <p style="margin-bottom: 16px;">
+        The system's execution pipeline is split into explicit roles to optimize how agents perceive obstacles, interact with payload nodes, and resolve intersections:
+    </p>
+    
+    <ul style="list-style-type: none; padding-left: 0; display: flex; flex-direction: column; gap: 16px; margin-bottom: 0;">
+        <li style="padding-left: 16px; border-left: 2px solid var(--accent);">
+            <strong>Track Robot Node</strong>
+            <p style="margin-top: 4px; margin-bottom: 0; font-size: 14px;">
+                Real-time kinematic path tracing where agents navigate an intersection network using local map frames. Each agent handles its own localization vector relative to its neighborhood.
+            </p>
+        </li>
+        <li style="padding-left: 16px; border-left: 2px solid var(--accent);">
+            <strong>Solid Cargo Box (Task Allocation)</strong>
+            <p style="margin-top: 4px; margin-bottom: 0; font-size: 14px;">
+                Decentralized item-to-agent pairing mechanics. Agents identify static coordinates representing tasks, negotiate entry metrics with adjacent units, and schedule physical retrieval patterns without an over-arching central dispatcher.
+            </p>
+        </li>
+        <li style="padding-left: 16px; border-left: 2px solid var(--accent);">
+            <strong>Line Target Goal</strong>
+            <p style="margin-top: 4px; margin-bottom: 0; font-size: 14px;">
+                End-point convergence management. Multi-agent streams converge onto designated workspace target points while dynamically updating cross-path priorities to avoid deadlock configurations.
+            </p>
+        </li>
+    </ul>
+
+    <hr style="border: 0; border-top: 1px solid var(--border-line); margin: 24px 0;">
+
+    <h3 style="margin-top: 0; margin-bottom: 12px;">Conflict Resolution & Localized Grid Consensus</h3>
+    <p style="margin-bottom: 12px;">
+        A major focus of this decentralized setup is solving intersection deadlocks. Utilizing an interactive <strong>Simulation Monitor</strong> interface, agents share their path itineraries with nearby neighbors rather than broadcasting to the whole network. 
+    </p>
+    <p style="margin-bottom: 0;">
+        When two agent trajectories cross on the coordinate plane, the units utilize localized intersection worker modes to stagger their movements seamlessly. This method optimizes routing efficiency and drastically minimizes total wait-times during simultaneous crossings.
+    </p>
+
+    <hr style="border: 0; border-top: 1px solid var(--border-line); margin: 24px 0;">
+
+    <h3 style="margin-top: 0; margin-bottom: 12px;">Runtime Monitoring & Optimization Metrics</h3>
+    <p style="margin-bottom: 16px;">
+        To analyze the efficiency of the underlying pathfinding matrix, the system features a live tracking engine that monitors multi-agent performance using key metrics:
+    </p>
+
+    <ul style="list-style-type: none; padding-left: 0; display: flex; flex-direction: column; gap: 16px; margin-bottom: 0;">
+        <li style="padding-left: 16px; border-left: 2px solid var(--accent);">
+            <strong>Fitness Scores</strong>
+            <p style="margin-top: 4px; margin-bottom: 0; font-size: 14px;">
+                A performance metric calculated per agent based on path efficiency, energy usage, and successful goal navigation. High-efficiency paths retain a higher fitness ceiling.
+            </p>
+        </li>
+        <li style="padding-left: 16px; border-left: 2px solid var(--accent);">
+            <strong>Kinematic Resource Constraints</strong>
+            <p style="margin-top: 4px; margin-bottom: 0; font-size: 14px;">
+                The software continuously tracks individual agent <em>Moves</em>, <em>Waits</em>, and <em>Turns</em>. Measuring wait states provides direct feedback on the pathfinder's efficiency, allowing for iterative tuning of local prioritization behaviors.
+            </p>
+        </li>
+    </ul>
+</div>
 
                 <div style="margin-top: 24px;">
                     <a href="https://github.com/1sznkaveesh/Swarm_System" target="_blank" class="utility-download-btn">To GitHub →</a>
