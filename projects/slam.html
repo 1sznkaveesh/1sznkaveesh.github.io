@@ -67,7 +67,7 @@
         <aside class="app-sidebar">
             <div class="sidebar-top">
                 <div class="brand-group">
-                    <h1 class="logo-title">KAVEESH</h1>
+                    <h1 class="logo-title">KAVEESH CHAUDHARI</h1>
                 </div>
                 <p class="meta-tagline">Project Breakdown.</p>
                 <nav class="app-nav">
@@ -127,6 +127,33 @@
 
     <hr style="border: 0; border-top: 1px solid var(--border-line); margin: 24px 0;">
 
+    <div class="costmap-section-container" style="display: flex; flex-direction: row; gap: 32px; align-items: center; margin-top: 32px; margin-bottom: 48px; max-width: 800px; flex-wrap: wrap;">
+    
+    <div class="media-container" style="margin: 0; max-width: 400px; flex: 1; min-width: 300px;">
+        <div class="media-box">
+            <div class="media-label">Visualization in RViz2</div>
+            <img src="Apic1.jpg" alt="Costmap Inflation Layer Mapping and Pathfinding Trajectory" style="width: 100%; height: auto; display: block; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.05);">
+        </div>
+    </div>
+
+    <div class="costmap-description" style="flex: 1; min-width: 320px; color: var(--text-muted); font-size: 14px; line-height: 1.6;">
+        <ul style="list-style-type: none; padding-left: 0; display: flex; flex-direction: column; gap: 14px; margin: 0;">
+            <li style="padding-left: 12px; border-left: 2px solid #00abc5;">
+                <strong>Dark Obstacles :</strong> The black/teal zones represent literal physical walls and pillars where collisions are certain.
+            </li>
+            <li style="padding-left: 12px; border-left: 2px solid #ff0000;">
+                <strong>Red Inflation Layer :</strong> Bright red rings act as a strict chassis-clearance buffer to keep the robot's outer edge from scraping obstacles.
+            </li>
+            <li style="padding-left: 12px; border-left: 2px solid #a000a0;">
+                <strong>Purple/Pink Safety Gradient :</strong> These fading hues apply a soft penalty cost that pushes the pathfinder toward wider, safer gaps.
+            </li>
+            <li style="padding-left: 12px; border-left: 2px solid #ffffff;">
+                <strong>White Free Space (Zero Cost) :</strong> The solid white grid marks open, optimal terrain where the planned trajectory can snake smoothly.
+            </li>
+        </ul>
+    </div>
+
+</div>
     <h3 style="margin-top: 0; margin-bottom: 12px;">Loop Closure Diagnostics</h3>
     <p style="margin-bottom: 0;">
         Through real-time feature point tracking, the architecture detects previously visited locations to assert loop closures. This system corrects accumulating odometry errors instantaneously, maintaining global coordinate map integrity even during long exploration runs within the Gazebo environment.Through real-time feature point tracking—visible as the dense cluster of green tracking indicators over key geometric structures in the simulation monitor—the architecture continuously registers unique visual landmarks. By evaluating these point matrices against historical frame pairs, the system detects previously visited locations to assert loop closures. This corrects accumulating odometry errors instantaneously, maintaining global coordinate map integrity even during long exploration runs.
