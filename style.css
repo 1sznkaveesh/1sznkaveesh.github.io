@@ -232,25 +232,126 @@ body {
     color: var(--text-primary);
 }
 
-/* Fluid Scalability Handlers */
+/* Blog Grid & Cards */
+.blog-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.blog-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-line);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+}
+
+.blog-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(79, 140, 255, 0.05);
+}
+
+.blog-thumbnail {
+    width: 200px;
+    min-width: 200px;
+    height: 100%;
+    min-height: 180px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.blog-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.blog-card:hover .blog-thumbnail img {
+    transform: scale(1.03);
+}
+
+.blog-content {
+    flex: 1;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+}
+
+.blog-meta {
+    font-size: 11px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.blog-tag {
+    color: var(--accent);
+}
+
+.blog-title {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+    line-height: 1.3;
+}
+
+.blog-title-link {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.blog-card:hover .blog-title-link,
+.blog-title-link:hover {
+    color: var(--accent);
+}
+
+.blog-desc {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+.blog-read-more {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease;
+    align-self: flex-start;
+}
+
+.blog-read-more:hover {
+    color: var(--text-primary);
+}
+
+/* Mobile responsiveness for blog card */
 @media (max-width: 850px) {
-    .app-container {
+    .blog-card {
         flex-direction: column;
     }
-    .app-sidebar {
+    .blog-thumbnail {
         width: 100%;
-        height: auto;
-        position: relative;
-        padding: 40px 24px 20px 24px;
+        min-width: 0;
+        height: 160px;
+        min-height: 160px;
     }
-    .app-nav {
-        margin-top: 24px;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 16px;
-    }
-    .app-main-content {
-        padding: 20px 24px 40px 24px;
-        gap: 48px;
+    .blog-content {
+        padding: 24px;
     }
 }
