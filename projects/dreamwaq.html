@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamWaQ: Reproduction and Research Analysis | Kaveesh</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 32px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-family: var(--font-heading);
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+        .back-btn:hover {
+            color: var(--accent);
+        }
+        .post-body {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.8;
+            max-width: 800px;
+        }
+        .post-body p {
+            margin-bottom: 20px;
+        }
+        .post-body h3 {
+            margin-top: 40px;
+            margin-bottom: 16px;
+            font-family: var(--font-heading);
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+        }
+        .post-body h4 {
+            margin-top: 28px;
+            margin-bottom: 12px;
+            font-family: var(--font-heading);
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .post-body hr {
+            border: 0;
+            border-top: 1px solid var(--border-line);
+            margin: 32px 0;
+        }
+        .post-body ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+        .post-body li {
+            margin-bottom: 8px;
+            line-height: 1.7;
+        }
+        .post-body table {
+            width: 100%;
+            max-width: 800px;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 14px;
+        }
+        .post-body th, .post-body td {
+            border: 1px solid var(--border-line);
+            padding: 12px 16px;
+            text-align: left;
+        }
+        .post-body th {
+            background: var(--bg-card);
+            font-family: var(--font-heading);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .post-body td {
+            color: var(--text-muted);
+        }
+        .post-body td:last-child, .post-body th:last-child {
+            text-align: right;
+        }
+        .post-body code {
+            background: var(--bg-card);
+            border: 1px solid var(--border-line);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--accent);
+        }
+        .post-body pre {
+            background: var(--bg-card);
+            border: 1px solid var(--border-line);
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 24px 0;
+        }
+        .post-body pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            color: var(--text-primary);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .media-container {
+            margin: 32px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            max-width: 800px;
+        }
+        .media-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-line);
+            border-radius: 8px;
+            padding: 16px;
+        }
+        .media-label {
+            font-family: var(--font-heading);
+            font-size: 12px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        .demo-img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            display: block;
+        }
+        .github-link {
+            margin-top: 32px;
+            display: inline-block;
+        }
+        .status-badge {
+            display: inline-block;
+            background: rgba(79, 140, 255, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-family: var(--font-heading);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 6px 14px;
+            border-radius: 4px;
+            margin-bottom: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <aside class="app-sidebar">
+            <div class="sidebar-top">
+                <div class="brand-group">
+                    <h1 class="logo-title">KAVEESH CHAUDHARI</h1>
+                </div>
+                <p class="meta-tagline">Project Breakdown.</p>
+                <nav class="app-nav">
+                    <a href="../index.html" class="nav-btn">RETURN HOME</a>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="app-main-content">
+            <article class="content-block">
+                <a href="../index.html" class="back-btn">Back to Dashboard</a>
+                
+                <div class="block-header">
+                    <h2 class="block-heading">DreamWaQ: Reproduction and Research Analysis</h2>
+                </div>
+
+                <div class="post-body">
+                    <div class="status-badge">Research Archive / Mechanistic Study</div>
+
+                    <p>
+                        I reproduced <a href="https://arxiv.org/abs/2301.10602" target="_blank" style="color: var(--accent);">DreamWaQ</a> (ICRA 2023) end to end, then spent a long time trying to understand what the beta-VAE terrain encoder, called CENet, actually learns. The honest bottom line: in the configuration and checkpoint I studied, the sampled latent is almost inert. The downstream policy runs almost fully on the deterministic mean.
+                    </p>
+
+                    <hr>
+
+                    <h3>The DreamWaQ System</h3>
+
+                    <p>
+                        DreamWaQ replaces the explicitly trained adaptation head of <strong>RMA</strong> (Rapid Motor Adaptation, RSS 2021) with a beta-VAE that has no observer. Given the last five steps of the robot's own history (positions, velocities, contacts, commands), the encoder maps them through 16 Gaussian latents to a small context vector. The decoder predicts the next body-frame velocities and height samples. Like RMA, the actor is conditioned on the latent.
+                    </p>
+
+                    <p>
+                        The design intent is implicit terrain imagination: the latent should summarize what the feet have touched, and that summary should guide the actor on hard terrain. The question I wanted to answer was whether the latent space actually carries that summary, and whether the sampling step matters to the resulting actions at all.
+                    </p>
+
+                    <hr>
+
+                    <h3>What I Did</h3>
+
+                    <ul>
+                        <li>Reproduced the full system (Isaac Gym, Unitree Go2) on the community implementation <code>curieuxjy/go2_dreamwaq</code>.</li>
+                        <li>Added a deterministic variant of CENet (flat 16-wide encoder head, KL term forced to zero) plus faithful and beta-zero stochastic tasks, and two curriculum-speed tasks for controlled experiments.</li>
+                        <li>Audited the implementation against the paper line by line.</li>
+                        <li>Ran a posterior-collapse audit, latent interventions on a frozen actor, a causal analysis of the CENet, and a full representation (probing) study.</li>
+                        <li>Ran controlled stability experiments across three curriculum conditions and five seeds.</li>
+                    </ul>
+
+                    <p>
+                        The archived repository, all data, the raw analysis scripts, and the full documentation live in the DreamWaQ repository linked at the end of this page. The single source of truth for the numbers below is <code>docs/DREAMWAQ_FACTS.md</code>.
+                    </p>
+
+                    <hr>
+
+                    <h3>First, the Reproduction</h3>
+
+                    <p>
+                        A faithful stochastic run at 1500 iterations trained cleanly. Markers at the start and end of that run:
+                    </p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Quantity</th>
+                                <th style="text-align:right">Start</th>
+                                <th style="text-align:right">End</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Reward</td>
+                                <td style="text-align:right">1.84</td>
+                                <td style="text-align:right">13.59</td>
+                            </tr>
+                            <tr>
+                                <td>Terrain level</td>
+                                <td style="text-align:right">0</td>
+                                <td style="text-align:right">6.22</td>
+                            </tr>
+                            <tr>
+                                <td>CENet reconstruction loss</td>
+                                <td style="text-align:right">0.4716</td>
+                                <td style="text-align:right">1.0052</td>
+                            </tr>
+                            <tr>
+                                <td>CENet velocity loss</td>
+                                <td style="text-align:right">0.1841</td>
+                                <td style="text-align:right">0.2411</td>
+                            </tr>
+                            <tr>
+                                <td>Weighted KL</td>
+                                <td style="text-align:right">0.094</td>
+                                <td style="text-align:right">0.060</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>
+                        That last line deserves attention: the KL term is small and barely moves. This is the first hint that something is off with the latent itself, and it is the thread that this whole project pulls on.
+                    </p>
+
+                    <hr>
+
+                    <h3>The Posterior Collapse Evidence</h3>
+
+                    <p>
+                        At the iteration-500 checkpoint of the stochastic baseline (256,000 samples), a full audit found textbook posterior collapse:
+                    </p>
+
+                    <ul>
+                        <li><strong>KL stays near zero.</strong> Mean 0.037 nats, median 0.024, and 18% of samples sit below 0.01.</li>
+                        <li><strong>Zero of sixteen latent dimensions are active.</strong> The activity criterion (per-dimension signal over noise) marks all dimensions inactive.</li>
+                        <li><strong>The posterior matches the prior.</strong> Mean sigma is 0.9996 (std 0.030), which is the prior for a standard Gaussian.</li>
+                        <li><strong>Mutual information with terrain collapses.</strong> MI between the posterior mean and the terrain type is 0.0148 nats against a terrain entropy of 2.996 nats, about 0.5%.</li>
+                        <li><strong>Sampling does not help reconstruction.</strong> Mean reconstruction error with the sampled latent is 0.7711, essentially the same as the 0.7611 obtained by feeding a constant zero, a difference of about 1.4%.</li>
+                    </ul>
+
+                    <div class="media-container">
+                        <div class="media-box">
+                            <div class="media-label">Posterior Mean Distribution (from posterior-collapse audit)</div>
+                            <img src="dreamwaq_mu_histogram.png" alt="Histogram of posterior means over 256,000 samples, collapsed around zero" class="demo-img">
+                        </div>
+                    </div>
+
+                    <p style="margin-top: 8px; font-size: 13px; color: var(--text-muted); text-align: center;">
+                        Posterior means over 256,000 samples. The distribution is concentrated near zero, which matches a prior-like collapse. Source: <code>stage1/audit_posterior_collapse.py</code> on the reproduction checkpoint.
+                    </p>
+
+                    <div class="media-container">
+                        <div class="media-box">
+                            <div class="media-label">Per-Dimension KL (from posterior-collapse audit)</div>
+                            <img src="dreamwaq_kl_per_dim.png" alt="Per-dimension KL across the sixteen latent dimensions" class="demo-img">
+                        </div>
+                    </div>
+
+                    <p style="margin-top: 8px; font-size: 13px; color: var(--text-muted); text-align: center;">
+                        Per-dimension KL for the sixteen latent dimensions. All stay near the prior, so no dimension carries information.
+                    </p>
+
+                    <p>
+                        This is the standard diagnosis of posterior collapse. It matters here because the whole point of DreamWaQ's CENet is to generate terrain features implicitly from the latent. If the latent does not carry terrain information, the mechanism the paper describes cannot be operating in this reproduction.
+                    </p>
+
+                    <hr>
+
+                    <h3>The Causal Story: Why Reconstruction Loss Climbs 113%</h3>
+
+                    <p>
+                        The reproduction run also showed something striking. The CENet reconstruction loss grows by 113% (0.4716 to 1.0052) over 1500 iterations, even as the robot gets better at locomotion. I ran a causal analysis on the scalars of the stochastic run to find out what drives that rise.
+                    </p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Quantity</th>
+                                <th style="text-align:right">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Reconstruction loss vs terrain level correlation</td>
+                                <td style="text-align:right">r = 0.949</td>
+                            </tr>
+                            <tr>
+                                <td>Reconstruction loss vs reward correlation</td>
+                                <td style="text-align:right">r = 0.255</td>
+                            </tr>
+                            <tr>
+                                <td>Reconstruction loss vs velocity loss correlation</td>
+                                <td style="text-align:right">r = -0.327</td>
+                            </tr>
+                            <tr>
+                                <td>Decoder.0 and decoder.6 weight updates after iteration 200</td>
+                                <td style="text-align:right">exactly 0</td>
+                            </tr>
+                            <tr>
+                                <td>Gradient attenuation through the 4-layer decoder</td>
+                                <td style="text-align:right">about 1/625</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>
+                        The interpretation that survives scrutiny: the outer decoder layers freeze early (their weight updates become exactly zero after roughly iteration 200), while the curriculum keeps pushing the robot onto harder terrain. The terrain gets harder, the decoder no longer adapts, and reconstruction loss rises in lockstep with terrain level. The correlation with terrain (r = 0.949) is far stronger than with reward or velocity loss.
+                    </p>
+
+                    <div class="media-container">
+                        <div class="media-box">
+                            <div class="media-label">Full Training Timeline (from forensic analysis of the stochastic run)</div>
+                            <img src="dreamwaq_full_timeline.png" alt="Training timeline showing reward, terrain level, and CENet reconstruction loss over 1500 iterations" class="demo-img">
+                        </div>
+                    </div>
+
+                    <p style="margin-top: 8px; font-size: 13px; color: var(--text-muted); text-align: center;">
+                        Reward, terrain level, and CENet reconstruction loss over the 1500-iteration stochastic run. Source: <code>forensic_report.py</code> on the TensorBoard scalars of the run.
+                    </p>
+
+                    <p>
+                        Important caveat: this is descriptive correlation, not a proven causal mechanism. The decoder layers freeze, the terrain gets harder, and the losses move together. I could not cleanly separate freeze timing from difficulty growth. I state the mechanism as the most consistent explanation, not as an established law.
+                    </p>
+
+                    <hr>
+
+                    <h3>Latent Interventions on the Frozen Actor</h3>
+
+                    <p>
+                        Intervening on a checkpoint is the cleanest way to ask how much the actor depends on the latent. On 255,488 samples from 512 environments across 20 terrains, with a frozen actor and CENet, I measured the mean action change produced by each perturbation:
+                    </p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Intervention</th>
+                                <th style="text-align:right">Mean action change (rad)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Clamp z to zero</td>
+                                <td style="text-align:right">0.0679</td>
+                            </tr>
+                            <tr>
+                                <td>Feed mu instead of the sampled z</td>
+                                <td style="text-align:right">0.0678</td>
+                            </tr>
+                            <tr>
+                                <td>Remove CENet entirely (zero context)</td>
+                                <td style="text-align:right">0.1964</td>
+                            </tr>
+                            <tr>
+                                <td>Swap z between same-terrain pairs</td>
+                                <td style="text-align:right">0.0926</td>
+                            </tr>
+                            <tr>
+                                <td>Cross-terrain shuffle of z</td>
+                                <td style="text-align:right">0.0943</td>
+                            </tr>
+                            <tr>
+                                <td>Action Jacobian with respect to z</td>
+                                <td style="text-align:right">0.013</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>
+                        Three readings. First, sampling does not matter: clamping z to zero (0.0679 rad) and replacing z with mu (0.0678 rad) are almost identical, which is expected once the posterior is collapsed. Second, the z channel has a real but small effect on actions: 0.068 rad against a mean action magnitude of 1.77 rad is about 3.8%, and the Jacobian term is the smallest of the three inputs by far (obs 0.113, vel 0.079, z 0.013). Third, cross-terrain shuffling changes actions no more than same-terrain swapping (0.0943 vs 0.0926), which directly suggests z does not encode a terrain-specific signal.
+                    </p>
+
+                    <p>
+                        A parallel in-simulation comparison (<code>eval_mu_vs_z.py</code>) confirmed the same pattern: no measurable difference in tracking error or fall rates between the z-conditioned and mu-conditioned policies.
+                    </p>
+
+                    <hr>
+
+                    <h3>Representation Analysis: What the Latent Mean and Latent Sigma Encode</h3>
+
+                    <p>
+                        The probing study (linear, MLP, and random-forest probes; balanced accuracy and R-squared; with permutation baselines and environment-wise cross-validation) asks directly what the latent mean and the latent sigma can be read as.
+                    </p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Target</th>
+                                <th style="text-align:right">From latent mu</th>
+                                <th style="text-align:right">Chance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Foot contact (left hind)</td>
+                                <td style="text-align:right">0.738</td>
+                                <td style="text-align:right">0.50</td>
+                            </tr>
+                            <tr>
+                                <td>Estimated velocity x</td>
+                                <td style="text-align:right">0.686</td>
+                                <td style="text-align:right">0.50</td>
+                            </tr>
+                            <tr>
+                                <td>Command x</td>
+                                <td style="text-align:right">0.628</td>
+                                <td style="text-align:right">0.50</td>
+                            </tr>
+                            <tr>
+                                <td>Terrain type (in-domain)</td>
+                                <td style="text-align:right">0.1101</td>
+                                <td style="text-align:right">0.0498</td>
+                            </tr>
+                            <tr>
+                                <td>Terrain type (env-wise CV)</td>
+                                <td style="text-align:right">0.0712</td>
+                                <td style="text-align:right">0.0528</td>
+                            </tr>
+                            <tr>
+                                <td>Terrain type (from sampled z)</td>
+                                <td style="text-align:right">at chance</td>
+                                <td style="text-align:right">0.0651</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>
+                        The latent mean encodes locomotion telemetry (foot contact, estimated velocity, command), and it does not encode terrain identity beyond a whisper. The in-domain terrain probe reads 0.1101, barely above its chance level of 0.0498, and most of that reading collapses under environment-wise cross-validation (0.0712 vs 0.0528 chance). The sampled z reads terrain at pure chance.
+                    </p>
+
+                    <p>
+                        The parallel measures agree: the sampled latent retains zero information across all targets (retention 0%), a temporal probe of z sequences finds no more structure than single frames (segment R-squared 0.0142), and z is at chance even in collision-adjacent rare events. Notably, the latent sigma, which is private to CENet and invisible to the policy, actually encodes more than mu. Its probe reads estimated velocity at 0.6272, command at 0.5726, and action norm at 0.4993, while the terrain type stays at 0.0407 (chance). The information that survives lives in the part of the latent the policy cannot see.
+                    </p>
+
+                    <p>
+                        Sensitivity analysis adds the last quantitative piece: replacing mu with a zero vector moves policy outputs by a KL of 2.7e-05, perturbing z by 0.1 sigma moves them by 9.3e-03, and replacing z with standard normal noise moves them by 1.85e-02. The policy output depends on mu about as much as on any z. With an effective signal-to-noise ratio of about 0.003, the sampled channel is functionally a constant.
+                    </p>
+
+                    <hr>
+
+                    <h3>The One Collapse I Saw, and Its Limits</h3>
+
+                    <p>
+                        The deterministic variant (flat encoder head, no KL) produced one genuine collapse across everything I ran: a long run that fell apart near iteration 1020 at a terrain level around 4.5. That event is the subject of the forensic figures below.
+                    </p>
+
+                    <div class="media-container">
+                        <div class="media-box">
+                            <div class="media-label">Collapse Zoom (from forensic analysis of the deterministic run)</div>
+                            <img src="dreamwaq_collapse_zoom.png" alt="Zoom around the deterministic run collapse near iteration 1020" class="demo-img">
+                        </div>
+                    </div>
+
+                    <p style="margin-top: 8px; font-size: 13px; color: var(--text-muted); text-align: center;">
+                        Zoom around the deterministic run's failure near iteration 1020. Source: <code>forensic_report.py</code> on the merged TensorBoard scalars of the deterministic runs.
+                    </p>
+
+                    <p>
+                        But the controlled statistics are the honest part of this story. In 15 controlled 500-iteration runs (three curriculum conditions, five seeds each), zero collapsed. The per-condition 95% confidence interval tops out at 52% for a single condition, and the pooled estimate for these short runs is an upper bound around 22%. A dedicated diagnostic window over 80 iterations on a healthy deterministic run remained healthy throughout.
+                    </p>
+
+                    <p>
+                        The curriculum-speed manipulation did do something real: the three conditions changed terrain progress in opposite directions (slow -1.28 terrain levels, original +1.11, fast +3.26), all pairwise differences significant at p = 0.008. But it had no effect on collapse. So: a rare, real, reproduced-once collapse event, with no causal story and no measured trigger. I am not going to dress that up as an established finding. <code>reports/failure.md</code> and the forensic report describe it as the outlier it is.
+                    </p>
+
+                    <hr>
+
+                    <h3>What I Concluded</h3>
+
+                    <ul>
+                        <li><strong>The sampling path is nearly invisible.</strong> The posterior collapses in this configuration, z carries 0.5% of terrain entropy, and interventions on z move actions by about 3.8%.</li>
+                        <li><strong>Mu, not z, steers the policy.</strong> The actor's reliance on mu equals its reliance on z, and mu encodes locomotion telemetry, not terrain identity.</li>
+                        <li><strong>Terrain imagination, as the paper describes it, does not operate here.</strong> No measured probe, intervention, or shuffle can find a terrain-specific signal in the latent. The policy effectively walks blind, which explains why a blind actor works so well.</li>
+                        <li><strong>Reconstruction loss climbs because terrain does.</strong> Decoder layers freeze early while the curriculum advances, and the two are correlated at r = 0.949.</li>
+                        <li><strong>The deterministic collapse is real but unexplained.</strong> One event in sixteen runs, never reproduced in controlled conditions.</li>
+                    </ul>
+
+                    <p>
+                        The most useful result of this project is the negative one. DreamWaQ's Blind Actor reproduces and performs well, which is consistent with recent literature questioning how much of the benefit comes from the imagination mechanism versus the architecture and training choices. If the latent were carrying terrain features in this implementation, the interventions and probes should have found them. They did not.
+                    </p>
+
+                    <hr>
+
+                    <h3>Honest Cautions</h3>
+
+                    <ul>
+                        <li>All probe and intervention results come from a single checkpoint (iteration 500, seed 1) of a single run. I used environment-wise cross-validation against temporal leakage, but I did not replicate the probes across multiple seeds.</li>
+                        <li>The stochastic-versus-deterministic comparison is not a pure sampling ablation, because the encoder head shape also differs.</li>
+                        <li>No real robot, one simulator, one embodiment (Unitree Go2), one reward design.</li>
+                        <li>The causal analysis is correlation-based. The freeze of the decoder layers is measured; the mechanism is my interpretation.</li>
+                        <li>This does not claim to overturn DreamWaQ. It characterizes this implementation and checkpoint. If the paper's setup differs from this community codebase, those differences are exactly where the mechanism could live.</li>
+                    </ul>
+
+                    <hr>
+
+                    <h3>Repository</h3>
+
+                    <p>
+                        Full archive: the modified DreamWaQ code, every analysis script, all committed data (metrics, CSVs, diagnostic pickles, figures), and the documentation set (<code>docs/DREAMWAQ_FACTS.md</code>, reproduction steps, provenance, image sources).
+                    </p>
+
+                    <div class="github-link">
+                        <a href="https://github.com/1sznkaveesh/DreamWaQ" target="_blank" class="utility-download-btn">To GitHub</a>
+                    </div>
+                </div>
+            </article>
+        </main>
+        
+    </div>
+
+</body>
+</html>
