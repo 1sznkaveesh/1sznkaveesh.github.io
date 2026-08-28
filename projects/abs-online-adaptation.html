@@ -209,7 +209,7 @@
                     </p>
 
                     <p>
-                        On the conditions it was trained on (goals 6 to 7.5 meters away), this works. The recovery policy cuts collisions from ~18% to ~5%. The paper's own discussion section admits it breaks under distribution shift. This happens when the robot faces situations it was not trained on, like goals much farther away.
+                        Within the conditions it was trained for (goals 1.5 to 7.5 meters away, per the paper and the released configuration), this works. The released testbed exercises the 6 to 7.5 meter band, and in my reproduction runs the recovery policy cuts collisions from ~18% (with no safety value at all) to ~5%, close to the paper's reported effect. The paper's failure-cases section limits its own guarantee: in its words, the policy switch can push the safety value's inputs outside the distribution it was trained on. In my runs, that failure appeared concretely under far-goal shift, with goals much farther away than the trained range.
                     </p>
 
                     <div class="media-container">
@@ -268,7 +268,7 @@
                     <h3>Online Adaptation: Frozen vs Adapted</h3>
 
                     <p>
-                        First I measured the frozen safety value under far-goal shift (goals 9 to 11 meters, called S5). Then I retrained the head online and evaluated the adapted version on the same held-out seeds.
+                        First I measured the frozen safety value under far-goal shift (goals 9 to 11 meters, called S5) and under everyday, in-distribution conditions (called IID). Then I retrained the head online and evaluated the adapted version on the same held-out seeds. The adapted head is labeled O/O: it was trained on a 1:1 mix of offline replay and online data, both collected with the recovery disabled.
                     </p>
 
                     <table>
@@ -338,7 +338,7 @@
                     <h3>Mechanism: Value-Map Ordering Failure</h3>
 
                     <p>
-                        The obvious explanation was that the threshold needed recalibration. That was not it.
+                        At first this looked like a calibration problem: the threshold just needs to move. Recalibration does move the operating point, as the fitted-threshold result shows later, but it does not fix the ordering problem underneath.
                     </p>
 
                     <p>
@@ -350,7 +350,7 @@
                     </p>
 
                     <p>
-                        The initial degradation came from the value map shifting around the switch boundary. Changing the switch threshold could move the operating point, but in our tested setup it did so at the cost of useful behavior.
+                        The initial degradation came from the value map shifting around the switch boundary. Changing the switch threshold could move the operating point, but in this tested setup it did so at the cost of useful behavior.
                     </p>
 
                     <hr>
@@ -363,17 +363,17 @@
 
                     <h4>1. Better training data</h4>
                     <p>
-                        Enrich the replay buffer with collision cases. Match the original state distribution. Result: everyday penalty unchanged (0.47 to 0.51% vs 0.40%). The data content is the cause, but fixing the data content does not fix the IID degradation.
+                        The causal factor is the replay's collision content, so I tested two ways to change the data. Enrich the replay with collision cases while keeping the original state distribution: pooled everyday false-safe stayed at 0.47% (per-seed 0.41 to 0.53%). Reweight replay states to match the original distribution: 0.38%. Neither moved the everyday penalty away from the 0.40% level of the standard adaptation. The data content is the cause, but changing the data content does not fix the everyday degradation.
                     </p>
 
                     <h4>2. Repair the training target</h4>
                     <p>
-                        Anchor the target to the frozen prior (hard clamp or soft blend). Soft blend: inert. Hard clamp: the mechanism worked, the map came back, but it overshot. The recovery policy fired on 92-99.6% of episodes. Far-goal reach collapsed to ~1%. Zero collisions, but vacuous. The robot just hid in recovery.
+                        Anchor the target to the frozen prior (hard clamp or soft blend). Soft blend: inert. Hard clamp: the mechanism worked, the map came back, but it overshot. Recovery fired on 92 to 99.6% of episodes. Far-goal reach collapsed to about 1% and timeouts reached 92%. False-safe fell to 0.000%, but the gain was vacuous: total collisions rose above the frozen baseline (7.1% everyday, 6.6% far-goal). The robot just hid in recovery.
                     </p>
 
                     <h4>3. Smarter switch rules</h4>
                     <p>
-                        A threshold fitted on calibration data. Episode-level persistence (once recovery fires, keep it on for the episode). The best admissible threshold still left everyday false-safe at 0.25%, above the 0.20% gate. Persistence changed nothing.
+                        A threshold fitted on calibration data. Episode-level persistence (once recovery fires, keep it on for the episode). The best admissible threshold still left everyday false-safe at 0.25%, above the 0.20% gate. Persistence changed nothing (everyday false-safe moved by less than 0.01 percentage point), and it could not rescue the frozen head's far-goal failure either.
                     </p>
 
                     <p>
@@ -425,7 +425,7 @@
                     </table>
 
                     <p>
-                        The same qualitative trade-off appeared again. The far-goal safety gain reproduced. The everyday penalty reproduced. The same qualitative trade-off appeared on a second independently selected base policy, so it was not specific to the first checkpoint.
+                        The same qualitative trade-off appeared again. The far-goal safety gain reproduced. The everyday penalty reproduced. This time on a second, independently selected base policy, so it was not specific to the first checkpoint. By the predeclared gate set, the full replication was not confirmed in one respect: the fitted-threshold floor from the first instance did not reproduce. That surprise is the subject of the next section.
                     </p>
 
                     <hr>
@@ -482,7 +482,7 @@
                     </p>
 
                     <p>
-                        The fitted-threshold outcome on the first instance gave a similar pattern (0.25% everyday false-safe at its calibration optimum, above the 0.20% gate, with reach also degraded). Two manifestations of the same over-activation trap.
+                        The fitted-threshold outcome on the first instance gave a similar pattern (0.25% everyday false-safe at its calibration optimum, above the 0.20% gate, with reach also degraded). Two instances of the same shape: the threshold that buys safety does so by firing recovery far more often, and reach pays the price.
                     </p>
 
                     <hr>
@@ -494,7 +494,7 @@
                     </p>
 
                     <p>
-                        The failure looks like a calibration problem but is not. The value map's ordering, not the switch rule, is what breaks. The method class is flanked by two failure modes:
+                        The evidence points to the value map's ordering as the main source of the degradation. The switch threshold can move the operating point, but in this setup the safety gain came at the cost of useful behavior. The method class is flanked by two failure modes:
                     </p>
 
                     <ul>
