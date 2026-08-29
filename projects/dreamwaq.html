@@ -185,7 +185,7 @@
                     <div class="status-badge">Research Archive / Mechanistic Study</div>
 
                     <p>
-                        I reproduced <a href="https://arxiv.org/abs/2301.10602" target="_blank" style="color: var(--accent);">DreamWaQ</a> (ICRA 2023) end to end, then spent a long time trying to understand what the beta-VAE terrain encoder, called CENet, actually learns. The honest bottom line: in the configuration and checkpoint I studied, the sampled latent is almost inert. The downstream policy runs almost fully on the deterministic mean.
+                        DreamWaQ (<a href="https://arxiv.org/abs/2301.10602" target="_blank" style="color: var(--accent);">ICRA 2023</a>) was reproduced end to end, followed by an investigation into what the beta-VAE terrain encoder (CENet) actually learns. The honest bottom line: in the configuration and checkpoint studied, the sampled latent is almost inert. The downstream policy runs almost fully on the deterministic mean.
                     </p>
 
                     <hr>
@@ -197,12 +197,12 @@
                     </p>
 
                     <p>
-                        The design intent is implicit terrain imagination: the latent should summarize what the feet have touched, and that summary should guide the actor on hard terrain. The question I wanted to answer was whether the latent space actually carries that summary, and whether the sampling step matters to the resulting actions at all.
+                        The design intent is implicit terrain imagination: the latent should summarize what the feet have touched, and that summary should guide the actor on hard terrain. The central question was whether the latent space actually carries that summary, and whether the sampling step matters to the resulting actions at all.
                     </p>
 
                     <hr>
 
-                    <h3>What I Did</h3>
+                    <h3>Investigation Steps</h3>
 
                     <ul>
                         <li>Reproduced the full system (Isaac Gym, Unitree Go2) on the community implementation <code>curieuxjy/go2_dreamwaq</code>.</li>
@@ -312,7 +312,7 @@
                     <h3>The Causal Story: Why Reconstruction Loss Climbs 113%</h3>
 
                     <p>
-                        The reproduction run also showed something striking. The CENet reconstruction loss grows by 113% (0.4716 to 1.0052) over 1500 iterations, even as the robot gets better at locomotion. I ran a causal analysis on the scalars of the stochastic run to find out what drives that rise.
+                        The reproduction run also showed something striking. The CENet reconstruction loss grows by 113% (0.4716 to 1.0052) over 1500 iterations, even as the robot gets better at locomotion. A causal analysis was run on the scalars of the stochastic run to find out what drives that rise.
                     </p>
 
                     <table>
@@ -370,7 +370,7 @@
                     <h3>Latent Interventions on the Frozen Actor</h3>
 
                     <p>
-                        Intervening on a checkpoint is the cleanest way to ask how much the actor depends on the latent. On 255,488 samples from 512 environments across 20 terrains, with a frozen actor and CENet, I measured the mean action change produced by each perturbation:
+                        Intervening on a checkpoint is the cleanest way to ask how much the actor depends on the latent. On 255,488 samples from 512 environments across 20 terrains, with a frozen actor and CENet, the mean action change produced by each perturbation was measured:
                     </p>
 
                     <table>
@@ -480,10 +480,10 @@
 
                     <hr>
 
-                    <h3>The One Collapse I Saw, and Its Limits</h3>
+                    <h3>The Observed Collapse and Its Limits</h3>
 
                     <p>
-                        The deterministic variant (flat encoder head, no KL) produced one genuine collapse across everything I ran: a long run that fell apart near iteration 1020 at a terrain level around 4.5. That event is the subject of the forensic figures below.
+                        The deterministic variant (flat encoder head, no KL) produced one genuine collapse across all runs: a long run that fell apart near iteration 1020 at a terrain level around 4.5. That event is the subject of the forensic figures below.
                     </p>
 
                     <div class="media-container">
@@ -507,7 +507,7 @@
 
                     <hr>
 
-                    <h3>What I Concluded</h3>
+                    <h3>Conclusions</h3>
 
                     <ul>
                         <li><strong>The sampling path is nearly invisible.</strong> The posterior collapses in this configuration, z carries 0.5% of terrain entropy, and interventions on z move actions by about 3.8%.</li>

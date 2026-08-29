@@ -193,7 +193,7 @@
                     <div class="status-badge">Research Archive / Mechanistic Study</div>
 
                     <p>
-                        I wanted to see what happens when you adapt the safety value in ABS online. The paper already points out that the frozen value can fail under distribution shift, so retraining it from the robot's own experience seemed like a direct next step.
+                        The question was whether adapting the safety value online could address the known distribution-shift failure. The paper already notes that the frozen value can fail under distribution shift, so retraining it from the robot's own experience was a direct next step.
                     </p>
 
                     <hr>
@@ -209,7 +209,7 @@
                     </p>
 
                     <p>
-                        Within the conditions it was trained for (goals 1.5 to 7.5 meters away, per the paper and the released configuration), this works. The released testbed exercises the 6 to 7.5 meter band, and in my reproduction runs the recovery policy cuts collisions from ~18% (with no safety value at all) to ~5%, close to the paper's reported effect. The paper's failure-cases section limits its own guarantee: in its words, the policy switch can push the safety value's inputs outside the distribution it was trained on. In my runs, that failure appeared concretely under far-goal shift, with goals much farther away than the trained range.
+                        Within the conditions it was trained for (goals 1.5 to 7.5 meters away, per the paper and the released configuration), this works. The released testbed exercises the 6 to 7.5 meter band, and in reproduction runs the recovery policy cuts collisions from ~18% (with no safety value at all) to ~5%, close to the paper's reported effect. The paper's failure-cases section limits its own guarantee: in its words, the policy switch can push the safety value's inputs outside the distribution it was trained on. In those runs, that failure appeared concretely under far-goal shift, with goals much farther away than the trained range.
                     </p>
 
                     <div class="media-container">
@@ -228,7 +228,7 @@
                     <h3>Experimental Setup</h3>
 
                     <p>
-                        I reproduced the released ABS implementation end-to-end on the official code (Isaac Gym, Unitree Go1 simulation). The reproduction was at smoke scale: ~1,000 parallel environments, ~7,000 steps per held-out evaluation seed, 420-second runs. This is not the paper's full-length evaluation.
+                        The released ABS implementation was reproduced end-to-end on the official code (Isaac Gym, Unitree Go1 simulation). The reproduction was at smoke scale: ~1,000 parallel environments, ~7,000 steps per held-out evaluation seed, 420-second runs. This is not the paper's full-length evaluation.
                     </p>
 
                     <p>
@@ -236,17 +236,17 @@
                     </p>
 
                     <p>
-                        For the adaptation study, I froze the backbone and trained only the final linear head (65 parameters). The robot collected data with the recovery switch disabled (recovery-OFF), so it saw the full consequences of its actions. The adaptation used SGD with a 1:1 mix of online and replay data, L2 regularization toward the frozen head, and ran for 3 rounds of 45,000 environment steps each.
+                        For the adaptation study, the backbone was frozen and only the final linear head (65 parameters) was trained. The robot collected data with the recovery switch disabled (recovery-OFF), so it saw the full consequences of its actions. The adaptation used SGD with a 1:1 mix of online and replay data, L2 regularization toward the frozen head, and ran for 3 rounds of 45,000 environment steps each.
                     </p>
 
                     <p>
                         Evaluation used held-out seeds 23, 24, 25. These were never touched by any training or calibration decision. Two independently selected base policies were tested (seed-0 at checkpoint 3000, seed-1 at checkpoint 2000, both passing the same predeclared selection rule).
                     </p>
 
-                    <h3>What I Changed</h3>
+                    <h3>Changes</h3>
 
                     <p>
-                        The original ABS implementation was treated as the baseline. Around it I added:
+                        The original ABS implementation was treated as the baseline. The following were added around the baseline:
                     </p>
 
                     <ul>
@@ -268,7 +268,7 @@
                     <h3>Online Adaptation: Frozen vs Adapted</h3>
 
                     <p>
-                        First I measured the frozen safety value under far-goal shift (goals 9 to 11 meters, called S5) and under everyday, in-distribution conditions (called IID). Then I retrained the head online and evaluated the adapted version on the same held-out seeds. The adapted head is labeled O/O: it was trained on a 1:1 mix of offline replay and online data, both collected with the recovery disabled.
+                        First, the frozen safety value was measured under far-goal shift (goals 9 to 11 meters, called S5) and under everyday, in-distribution conditions (called IID). The head was then retrained online and the adapted version evaluated on the same held-out seeds. The adapted head is labeled O/O: it was trained on a 1:1 mix of offline replay and online data, both collected with the recovery disabled.
                     </p>
 
                     <table>
@@ -358,12 +358,12 @@
                     <h3>Repair Experiments</h3>
 
                     <p>
-                        I tested three intuitive repair directions. Each once. Each with predeclared gates.
+                        Three intuitive repair directions were tested. Each once. Each with predeclared gates.
                     </p>
 
                     <h4>1. Better training data</h4>
                     <p>
-                        The causal factor is the replay's collision content, so I tested two ways to change the data. Enrich the replay with collision cases while keeping the original state distribution: pooled everyday false-safe stayed at 0.47% (per-seed 0.41 to 0.53%). Reweight replay states to match the original distribution: 0.38%. Neither moved the everyday penalty away from the 0.40% level of the standard adaptation. The data content is the cause, but changing the data content does not fix the everyday degradation.
+                        The causal factor is the replay's collision content, so two ways to change the data were tested. Enrich the replay with collision cases while keeping the original state distribution: pooled everyday false-safe stayed at 0.47% (per-seed 0.41 to 0.53%). Reweight replay states to match the original distribution: 0.38%. Neither moved the everyday penalty away from the 0.40% level of the standard adaptation. The data content is the cause, but changing the data content does not fix the everyday degradation.
                     </p>
 
                     <h4>2. Repair the training target</h4>
@@ -377,7 +377,7 @@
                     </p>
 
                     <p>
-                        The three repair directions I tested (data, target, decision rule) each failed on at least one predeclared gate.
+                        The three repair directions tested (data, target, decision rule) each failed on at least one predeclared gate.
                     </p>
 
                     <hr>
@@ -385,11 +385,11 @@
                     <h3>Independent Replication: Second Base Policy</h3>
 
                     <p>
-                        At that point I still had the obvious question: maybe this was just one checkpoint.
+                        The remaining question was whether this was specific to one checkpoint.
                     </p>
 
                     <p>
-                        So I ran the entire pipeline on a second, independently trained base policy. Fresh safety value, fresh data buffer, fresh adaptation, fresh threshold fit, same held-out seeds.
+                        The entire pipeline was run on a second, independently trained base policy. Fresh safety value, fresh data buffer, fresh adaptation, fresh threshold fit, same held-out seeds.
                     </p>
 
                     <table>
@@ -433,7 +433,7 @@
                     <h3>Operating Point: The Threshold Surprise</h3>
 
                     <p>
-                        Then I fitted a fresh switch threshold for the second instance (on calibration data only). The fitted threshold dramatically reduced everyday false-safe (0.619% to 0.032%) and far-goal false-safe (to 0.000%).
+                        A fresh switch threshold was then fitted for the second instance (on calibration data only). The fitted threshold dramatically reduced everyday false-safe (0.619% to 0.032%) and far-goal false-safe (to 0.000%).
                     </p>
 
                     <p>
@@ -487,7 +487,7 @@
 
                     <hr>
 
-                    <h3>What I Think Is Happening</h3>
+                    <h3>Mechanism Interpretation</h3>
 
                     <p>
                         A safety-critical switching value is only as good as the labels that pin it. With near-unit discounting and self-generated targets, the value of ordinary states is set almost entirely by its own future values. A tiny set of correct labels (the hindsight-relabelled collision steps) gets spread through a small linear head across the whole map, quietly moving the bulk of the map away from the switch boundary.
@@ -524,7 +524,7 @@
                     <h3>Conclusion</h3>
 
                     <p>
-                        I started this project looking for a way to adapt the safety value to a new regime. The result was not a better method. The useful part was finding a trade-off that reproduced on a second base policy and understanding some of the reasons behind it. I have not found a way around that trade-off yet.
+                        The project began by looking for a way to adapt the safety value to a new regime. The result was not a better method. The useful part was finding a trade-off that reproduced on a second base policy and understanding some of the reasons behind it. No way around that trade-off has been found.
                     </p>
 
                     
