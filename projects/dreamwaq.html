@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DreamWaQ: Reproduction and Research Analysis | Kaveesh</title>
+    <title>DreamWaQ: Reproduction and Deployment-Robustness Investigation | Kaveesh</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -178,14 +178,22 @@
                 <a href="../index.html" class="back-btn">Back to Dashboard</a>
                 
                 <div class="block-header">
-                    <h2 class="block-heading">DreamWaQ: Reproduction and Research Analysis</h2>
+                    <h2 class="block-heading">DreamWaQ: Reproduction and Deployment-Robustness Investigation</h2>
                 </div>
 
                 <div class="post-body">
-                    <div class="status-badge">Research Archive / Mechanistic Study</div>
+                    <div class="status-badge">Completed Investigation / Intervention Rejected</div>
 
                     <p>
-                        DreamWaQ (<a href="https://arxiv.org/abs/2301.10602" target="_blank" style="color: var(--accent);">ICRA 2023</a>) was reproduced end to end, followed by an investigation into what the beta-VAE terrain encoder (CENet) actually learns. The honest bottom line: in the configuration and checkpoint studied, the sampled latent is almost inert. The downstream policy runs almost fully on the deterministic mean.
+                        Reproduced and analyzed a legged-robot reinforcement-learning implementation using Isaac Gym and PyTorch. Investigated latent-policy sensitivity and the training-to-deployment velocity-input mismatch, implemented a targeted training ablation, and evaluated its limitations through controlled simulator experiments.
+                    </p>
+
+                    <p>
+                        DreamWaQ (<a href="https://arxiv.org/abs/2301.10602" target="_blank" style="color: var(--accent);">ICRA 2023</a>) was reproduced end to end, followed by an investigation into what the beta-VAE terrain encoder (CENet) actually learns. In the configuration and checkpoint studied, the sampled latent is almost inert. The final phase tested whether removing AdaBoot during training would close the estimated-velocity deployment gap. It did not: both pre-registered fall-rate thresholds failed, and the intervention was rejected. No behavioral improvement is claimed.
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong> completed investigation; proposed intervention rejected. No behavioral improvement is claimed.
                     </p>
 
                     <hr>
@@ -210,10 +218,11 @@
                         <li>Audited the implementation against the paper line by line.</li>
                         <li>Ran a posterior-collapse audit, latent interventions on a frozen actor, a causal analysis of the CENet, and a full representation (probing) study.</li>
                         <li>Ran controlled stability experiments across three curriculum conditions and five seeds.</li>
+                        <li>Measured the estimated-velocity deployment gap, then implemented and evaluated a targeted AdaBoot-off training ablation with pre-registered closed-loop fall-rate criteria.</li>
                     </ul>
 
                     <p>
-                        The archived repository, all data, the raw analysis scripts, and the full documentation live in the DreamWaQ repository linked at the end of this page. The single source of truth for the numbers below is <code>docs/DREAMWAQ_FACTS.md</code>.
+                        The repository contains the code, committed metrics, figures, and full documentation; large checkpoints and raw evaluation data are preserved externally and indexed by SHA256. The single source of truth for the numbers below is <code>docs/DREAMWAQ_FACTS.md</code>.
                     </p>
 
                     <hr>
@@ -507,18 +516,99 @@
 
                     <hr>
 
+                    <h3>Deployment Velocity Mismatch and the AdaBoot-off Test</h3>
+
+                    <p>
+                        The final question was not about the latent. It was about the velocity input. At the frozen AdaBoot-on baseline checkpoint (iteration 3000, seed 101), the policy was evaluated in closed loop with true simulator velocity and with the CENet's estimated velocity. The deployment channel was worse: 3.62% falls versus 1.20%. The estimated-minus-true difference was +2.42 percentage points (95% cluster CI [+1.16, +3.73]).
+                    </p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Baseline condition</th>
+                                <th style="text-align:right">Episodes</th>
+                                <th style="text-align:right">Falls</th>
+                                <th style="text-align:right">Fall rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>True velocity</td>
+                                <td style="text-align:right">1,166</td>
+                                <td style="text-align:right">14</td>
+                                <td style="text-align:right">1.20%</td>
+                            </tr>
+                            <tr>
+                                <td>Estimated velocity</td>
+                                <td style="text-align:right">1,189</td>
+                                <td style="text-align:right">43</td>
+                                <td style="text-align:right">3.62%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>
+                        The estimator itself was near-unbiased on these closed-loop states; the gap is actor-side. The training mixture is close to the clean channel (1.54% in the 50/50 condition), while pure estimated velocity is effectively absent from training. The targeted intervention was therefore simple: disable AdaBoot so the actor receives estimated velocity on every training step. The switch was opt-in, active on every rollout step, and evaluated at the fixed @3000 checkpoint.
+                    </p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>AdaBoot-off condition</th>
+                                <th style="text-align:right">Episodes</th>
+                                <th style="text-align:right">Falls</th>
+                                <th style="text-align:right">Fall rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>True velocity</td>
+                                <td style="text-align:right">1,209</td>
+                                <td style="text-align:right">68</td>
+                                <td style="text-align:right">5.62%</td>
+                            </tr>
+                            <tr>
+                                <td>Estimated velocity</td>
+                                <td style="text-align:right">1,201</td>
+                                <td style="text-align:right">53</td>
+                                <td style="text-align:right">4.41%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>
+                        Both pre-registered thresholds failed: estimated ≤ 2.2% and true ≤ 2.0%. The estimated-velocity comparison against baseline was +0.80 percentage points with a 95% CI of [−0.91, +2.53] — no statistically conclusive improvement. The true-velocity condition regressed by +4.42 points (95% CI [+2.74, +6.10]). The run also trained less stably than baseline: reward 3.86 vs 8.74 at @3000, 20 negative-reward iterations vs 1, and an earlier post-@3000 collapse.
+                    </p>
+
+                    <p>
+                        The intervention was rejected. No second seed and no alternative intervention were run. The true-velocity regression is partly out-of-distribution because the evaluator supplies RMS-normalized true velocity while the intervention trained on raw estimated velocity; the rejection rests on the deployment channel, which misses its absolute threshold and shows no improvement. The result is specific to this implementation, task, recipe, and noise-free, push-free evaluator. No novelty is claimed: this is DreamWaQ's own “w/o AdaBoot” ablation.
+                    </p>
+
+                    <p>
+                        Full record:
+                        <a href="https://github.com/1sznkaveesh/DreamWaQ/blob/main/reports/DEPLOYMENT_ROBUSTNESS.md" target="_blank" style="color: var(--accent);">final report</a>,
+                        <a href="https://github.com/1sznkaveesh/DreamWaQ/blob/main/docs/DEPLOYMENT_ROBUSTNESS_REPRODUCTION.md" target="_blank" style="color: var(--accent);">reproduction protocol</a>,
+                        <a href="https://github.com/1sznkaveesh/DreamWaQ/blob/main/docs/DEPLOYMENT_ROBUSTNESS_IMPLEMENTATION.md" target="_blank" style="color: var(--accent);">implementation and diff</a>, and
+                        <a href="https://github.com/1sznkaveesh/DreamWaQ/blob/main/docs/FINAL_ARCHIVE.md" target="_blank" style="color: var(--accent);">artifact archive</a>.
+                    </p>
+
+                    <hr>
+
                     <h3>Conclusions</h3>
 
                     <ul>
-                        <li><strong>The sampling path is nearly invisible.</strong> The posterior collapses in this configuration, z carries 0.5% of terrain entropy, and interventions on z move actions by about 3.8%.</li>
+                        <li><strong>The sampling path is nearly invisible and did not justify a latent-side intervention.</strong> The posterior collapses in this configuration, z carries 0.5% of terrain entropy, and interventions on z move actions by about 3.8%.</li>
                         <li><strong>Mu, not z, steers the policy.</strong> The actor's reliance on mu equals its reliance on z, and mu encodes locomotion telemetry, not terrain identity.</li>
                         <li><strong>Terrain imagination, as the paper describes it, does not operate here.</strong> No measured probe, intervention, or shuffle can find a terrain-specific signal in the latent. The policy effectively walks blind, which explains why a blind actor works so well.</li>
                         <li><strong>Reconstruction loss climbs because terrain does.</strong> Decoder layers freeze early while the curriculum advances, and the two are correlated at r = 0.949.</li>
                         <li><strong>The deterministic collapse is real but unexplained.</strong> One event in sixteen runs, never reproduced in controlled conditions.</li>
+                        <li><strong>The deployment gap is behavioral.</strong> The frozen baseline falls at 3.62% with estimated velocity versus 1.20% with true velocity under the same protocol.</li>
+                        <li><strong>Removing AdaBoot did not fix the deployment gap.</strong> The intervention reached 4.41% estimated and 5.62% true, failed both thresholds, showed no statistically conclusive improvement, and trained less stably.</li>
+                        <li><strong>The intervention is rejected and the investigation is closed.</strong> No behavioral improvement is claimed; the latent-sampling line is not being extended into another experiment.</li>
                     </ul>
 
                     <p>
-                        The most useful result of this project is the negative one. DreamWaQ's Blind Actor reproduces and performs well, which is consistent with recent literature questioning how much of the benefit comes from the imagination mechanism versus the architecture and training choices. If the latent were carrying terrain features in this implementation, the interventions and probes should have found them. They did not.
+                        The most useful result of this project is the negative one. DreamWaQ's Blind Actor reproduces and performs well, which is consistent with recent literature questioning how much of the benefit comes from the imagination mechanism versus the architecture and training choices. If the latent were carrying terrain features in this implementation, the interventions and probes should have found them. They did not. The final deployment test similarly found that a plausible train/deploy matching fix did not improve the deployment channel.
                     </p>
 
                     <hr>
@@ -531,6 +621,10 @@
                         <li>No real robot, one simulator, one embodiment (Unitree Go2), one reward design.</li>
                         <li>The causal analysis is correlation-based. The freeze of the decoder layers is measured; the mechanism is my interpretation.</li>
                         <li>This does not claim to overturn DreamWaQ. It characterizes this implementation and checkpoint. If the paper's setup differs from this community codebase, those differences are exactly where the mechanism could live.</li>
+                        <li>The deployment-robustness result is one training seed. The `_s2` blocks are a second evaluation seed on the same checkpoint, not a second trained model; seed-to-seed variance is unmeasured.</li>
+                        <li>The baseline and intervention used different source revisions, and the source-matched @2000 control was not run because the intervention failed independently. Causal attribution to AdaBoot alone is therefore limited.</li>
+                        <li>The final evaluator disables noise and domain randomization and does not test pushes. The true-velocity regression is partly out-of-distribution; the rejection rests on the estimated channel. No real-robot or push-robustness claim is made.</li>
+                        <li>The AdaBoot-off switch is DreamWaQ's own ablation, not a novel method. No publication-readiness or novelty claim is made.</li>
                     </ul>
 
                     <hr>
@@ -538,7 +632,14 @@
                     <h3>Repository</h3>
 
                     <p>
-                        Full archive: the modified DreamWaQ code, every analysis script, all committed data (metrics, CSVs, diagnostic pickles, figures), and the documentation set (<code>docs/DREAMWAQ_FACTS.md</code>, reproduction steps, provenance, image sources).
+                        Full archive: the modified DreamWaQ code, every analysis script, all committed data (metrics, CSVs, diagnostic pickles, figures), and the documentation set (<code>docs/DREAMWAQ_FACTS.md</code>, reproduction steps, provenance, image sources). The final-phase report, reproduction protocol, implementation diff, and artifact index are in the repository; large checkpoints and raw evaluation data are preserved externally and indexed by SHA256.
+                    </p>
+
+                    <p>
+                        Direct links:
+                        <a href="https://github.com/1sznkaveesh/DreamWaQ/blob/main/reports/DEPLOYMENT_ROBUSTNESS.md" target="_blank" style="color: var(--accent);">deployment-robustness report</a> ·
+                        <a href="https://github.com/1sznkaveesh/DreamWaQ/blob/main/docs/FINAL_ARCHIVE.md" target="_blank" style="color: var(--accent);">final archive</a> ·
+                        <a href="https://github.com/1sznkaveesh/DreamWaQ" target="_blank" style="color: var(--accent);">repository</a>
                     </p>
 
                     <div class="github-link">
