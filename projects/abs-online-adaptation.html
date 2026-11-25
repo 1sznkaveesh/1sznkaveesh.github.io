@@ -3,540 +3,350 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adapting a Robot's Safety Judge Online | Kaveesh</title>
+    <title>Can a Robot's Safety Switch Learn on the Job? | Kaveesh Chaudhari</title>
+    <meta name="description" content="Retraining the Agile But Safe reach-avoid value online fixes far-goal failures but degrades everyday safety; the trade-off replicates across two independently selected base policies.">
+    <meta name="author" content="Kaveesh Chaudhari">
+    <meta property="og:title" content="Online Adaptation of a Learned Safety Value">
+    <meta property="og:type" content="article">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232c6a58'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' font-weight='600' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400;1,8..60,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
-    <style>
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 32px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-family: var(--font-heading);
-            font-size: 14px;
-            transition: color 0.2s ease;
-        }
-        .back-btn:hover {
-            color: var(--accent);
-        }
-        .post-body {
-            color: var(--text-muted);
-            font-size: 15px;
-            line-height: 1.8;
-            max-width: 800px;
-        }
-        .post-body p {
-            margin-bottom: 20px;
-        }
-        .post-body h3 {
-            margin-top: 40px;
-            margin-bottom: 16px;
-            font-family: var(--font-heading);
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.3px;
-        }
-        .post-body h4 {
-            margin-top: 28px;
-            margin-bottom: 12px;
-            font-family: var(--font-heading);
-            font-size: 17px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        .post-body hr {
-            border: 0;
-            border-top: 1px solid var(--border-line);
-            margin: 32px 0;
-        }
-        .post-body ul {
-            margin-bottom: 20px;
-            padding-left: 20px;
-        }
-        .post-body li {
-            margin-bottom: 8px;
-            line-height: 1.7;
-        }
-        .post-body table {
-            width: 100%;
-            max-width: 800px;
-            border-collapse: collapse;
-            margin: 24px 0;
-            font-size: 14px;
-        }
-        .post-body th, .post-body td {
-            border: 1px solid var(--border-line);
-            padding: 12px 16px;
-            text-align: left;
-        }
-        .post-body th {
-            background: var(--bg-card);
-            font-family: var(--font-heading);
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        .post-body td {
-            color: var(--text-muted);
-        }
-        .post-body code {
-            background: var(--bg-card);
-            border: 1px solid var(--border-line);
-            border-radius: 4px;
-            padding: 2px 6px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            color: var(--accent);
-        }
-        .post-body pre {
-            background: var(--bg-card);
-            border: 1px solid var(--border-line);
-            border-radius: 8px;
-            padding: 16px;
-            overflow-x: auto;
-            margin: 24px 0;
-        }
-        .post-body pre code {
-            background: none;
-            border: none;
-            padding: 0;
-            color: var(--text-primary);
-            font-size: 13px;
-            line-height: 1.6;
-        }
-        .media-container {
-            margin: 32px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-            max-width: 800px;
-        }
-        .media-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-line);
-            border-radius: 8px;
-            padding: 16px;
-        }
-        .media-label {
-            font-family: var(--font-heading);
-            font-size: 12px;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-            font-weight: 700;
-        }
-        .demo-img {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-            display: block;
-        }
-        .github-link {
-            margin-top: 32px;
-            display: inline-block;
-        }
-        .status-badge {
-            display: inline-block;
-            background: rgba(79, 140, 255, 0.1);
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            font-family: var(--font-heading);
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 6px 14px;
-            border-radius: 4px;
-            margin-bottom: 24px;
-        }
-        .pipeline-text {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-line);
-            border-radius: 6px;
-            padding: 16px;
-            white-space: pre-wrap;
-            line-height: 1.8;
-            color: var(--text-primary);
-        }
-    </style>
 </head>
 <body>
 
-    <div class="app-container">
-        
-        <aside class="app-sidebar">
-            <div class="sidebar-top">
-                <div class="brand-group">
-                    <h1 class="logo-title">KAVEESH CHAUDHARI</h1>
-                </div>
-                <p class="meta-tagline">Project Breakdown.</p>
-                <nav class="app-nav">
-                    <a href="../index.html" class="nav-btn">RETURN HOME</a>
-                </nav>
-            </div>
+    <header class="site-header">
+        <div class="container">
+            <a href="../index.html" class="site-name">Kaveesh Chaudhari</a>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="../index.html#research">Research</a>
+                <a href="../index.html#projects">Projects</a>
+                <a href="https://drive.google.com/file/d/1AUieMIezUhRojSnfZZ9DG1ku7m9eyF67/view?usp=sharing" target="_blank" rel="noopener">CV</a>
+                <a href="../index.html#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container article">
+        <a href="../index.html#research" class="back-link">&larr; Back home</a>
+
+        <p class="article-kicker">Research · Building on <em>Agile But Safe</em> (He et al., RSS 2024)</p>
+        <h1>Can a robot's safety switch learn on the job?</h1>
+        <p class="lede">
+            <em>Agile But Safe</em> uses a small learned safety value to decide when a legged robot should stop
+            sprinting and back off. I tried retraining that value online so it would hold up under distribution
+            shift. It worked, and it also broke something else.
+        </p>
+
+        <div class="article-meta">
+            <span class="status">Completed study</span>
+            <span>Isaac Gym · Unitree Go1 (simulation)</span>
+            <a href="https://github.com/1sznkaveesh/ABS" target="_blank" rel="noopener">Code</a>
+            <a href="https://arxiv.org/abs/2401.17583" target="_blank" rel="noopener">Original paper</a>
+        </div>
+
+        <aside class="summary" aria-label="Summary">
+            <h2>In short</h2>
+            <ul>
+                <li>Head-only online adaptation of the ABS reach-avoid value cut far-goal false-safe collisions from <strong>0.974% to 0.010%</strong>, but raised everyday (in-distribution) false-safe from <strong>0.060% to 0.404%</strong>.</li>
+                <li>The degradation traces to the value map drifting away from the switching threshold: with a near-unit discount, only ~0.2% of training targets are grounded collision labels.</li>
+                <li>Three repair families (replay data, training target, switching rule) were each tested once against pre-declared gates. Each failed at least one.</li>
+                <li>The trade-off replicated on a second, independently selected base policy. A refitted threshold restores safety only by making the robot too conservative to be useful (far-goal reach 77.8% &rarr; 12.2%).</li>
+            </ul>
         </aside>
 
-        <main class="app-main-content">
-            <article class="content-block">
-                <a href="../index.html" class="back-btn">Back to Dashboard</a>
-                
-                <div class="block-header">
-                    <h2 class="block-heading">Adapting a Robot's Safety Judge Online</h2>
-                </div>
-
-                <div class="post-body">
-                    <div class="status-badge">Research Archive / Mechanistic Study</div>
-
-                    <p>
-                        The question was whether adapting the safety value online could address the known distribution-shift failure. The paper already notes that the frozen value can fail under distribution shift, so retraining it from the robot's own experience was a direct next step.
-                    </p>
-
-                    <hr>
-
-                    <h3>The Original ABS System</h3>
-
-                    <p>
-                        <a href="https://arxiv.org/abs/2401.17583" target="_blank" style="color: var(--accent);">"Agile But Safe"</a> (RSS 2024, arXiv:2401.17583) is a system for making a legged robot both fast and safe. The core idea is simple: you cannot make one policy that does both. So you train two.
-                    </p>
-
-                    <p>
-                        The <strong>agile policy</strong> runs fast toward goals. The <strong>recovery policy</strong> is slow and conservative. It knows how to back away from obstacles. The glue between them is a small neural network (19 inputs to 64 to 64 to 1, Tanh output) that outputs a <strong>safety value</strong>. If that value crosses <code>-0.05</code>, the system switches to recovery. Below the threshold, the agile policy drives.
-                    </p>
-
-                    <p>
-                        Within the conditions it was trained for (goals 1.5 to 7.5 meters away, per the paper and the released configuration), this works. The released testbed exercises the 6 to 7.5 meter band, and in reproduction runs the recovery policy cuts collisions from ~18% (with no safety value at all) to ~5%, close to the paper's reported effect. The paper's failure-cases section limits its own guarantee: in its words, the policy switch can push the safety value's inputs outside the distribution it was trained on. In those runs, that failure appeared concretely under far-goal shift, with goals much farther away than the trained range.
-                    </p>
-
-                    <div class="media-container">
-                        <div class="media-box">
-                            <div class="media-label">ABS Stratification by Goal Distance (from project diagnostics)</div>
-                            <img src="abs_strat.png" alt="ABS stratification analysis showing value predictions across goal-distance bins" class="demo-img">
-                        </div>
-                    </div>
-
-                    <p style="margin-top: 8px; font-size: 13px; color: var(--text-muted); text-align: center;">
-                        Stratified analysis of the frozen RA value across goal-distance bins. The plot shows how value predictions and collision rates change as the robot operates farther from the goal. Source: project diagnostic data.
-                    </p>
-
-                    <hr>
-
-                    <h3>Experimental Setup</h3>
-
-                    <p>
-                        The released ABS implementation was reproduced end-to-end on the official code (Isaac Gym, Unitree Go1 simulation). The reproduction was at smoke scale: ~1,000 parallel environments, ~7,000 steps per held-out evaluation seed, 420-second runs. This is not the paper's full-length evaluation.
-                    </p>
-
-                    <p>
-                        The safety value network (RA value) takes 19-dimensional input: base linear velocity (3), base angular velocity (3), goal position in body frame (2), and 11 log ray distances. Architecture is a 3-layer MLP with a Tanh head. Training uses a Bellman-MSE loss with a near-unit discount (<code>gamma = 0.999999</code>) and hindsight relabeling. When a collision happens, the last 10 steps get relabeled as risky.
-                    </p>
-
-                    <p>
-                        For the adaptation study, the backbone was frozen and only the final linear head (65 parameters) was trained. The robot collected data with the recovery switch disabled (recovery-OFF), so it saw the full consequences of its actions. The adaptation used SGD with a 1:1 mix of online and replay data, L2 regularization toward the frozen head, and ran for 3 rounds of 45,000 environment steps each.
-                    </p>
-
-                    <p>
-                        Evaluation used held-out seeds 23, 24, 25. These were never touched by any training or calibration decision. Two independently selected base policies were tested (seed-0 at checkpoint 3000, seed-1 at checkpoint 2000, both passing the same predeclared selection rule).
-                    </p>
-
-                    <h3>Changes</h3>
-
-                    <p>
-                        The original ABS implementation was treated as the baseline. The following were added around the baseline:
-                    </p>
-
-                    <ul>
-                        <li>Recovery-OFF rollout collection (the robot experiences full consequences without the safety switch intervening).</li>
-                        <li>Deterministic replay construction from the IID rollouts (2M tuples, frozen head used to recompute targets).</li>
-                        <li>Frozen-backbone / 65-parameter head-only adaptation loop.</li>
-                        <li>Online + replay 1:1 training mix with L2 regularization toward the frozen head.</li>
-                        <li>Evaluation and diagnostic tooling (per-step value logging, false-safe attribution, held-out seed protocol).</li>
-                        <li>Three repair experiment families: replay/content, target formulation, decision rule.</li>
-                        <li>Second-base-policy replication pipeline (fresh base policy, fresh RA, fresh data, fresh adaptation, fresh threshold fit).</li>
-                    </ul>
-
-                    <p>
-                        The original ABS code was never modified. All adaptation logic ran in external scripts that re-executed the environment loop with the adapted head.
-                    </p>
-
-                    <hr>
-
-                    <h3>Online Adaptation: Frozen vs Adapted</h3>
-
-                    <p>
-                        First, the frozen safety value was measured under far-goal shift (goals 9 to 11 meters, called S5) and under everyday, in-distribution conditions (called IID). The head was then retrained online and the adapted version evaluated on the same held-out seeds. The adapted head is labeled O/O: it was trained on a 1:1 mix of offline replay and online data, both collected with the recovery disabled.
-                    </p>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Metric</th>
-                                <th style="text-align:right">Frozen</th>
-                                <th style="text-align:right">Adapted (O/O)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Everyday (IID) false-safe</strong></td>
-                                <td style="text-align:right">0.060%</td>
-                                <td style="text-align:right"><strong>0.404%</strong></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Far-goal (S5) false-safe</strong></td>
-                                <td style="text-align:right">0.974%</td>
-                                <td style="text-align:right"><strong>0.010%</strong></td>
-                            </tr>
-                            <tr>
-                                <td>Everyday reach</td>
-                                <td style="text-align:right">79.3%</td>
-                                <td style="text-align:right">82.7%</td>
-                            </tr>
-                            <tr>
-                                <td>Far-goal reach</td>
-                                <td style="text-align:right">50.9%</td>
-                                <td style="text-align:right">62.0%</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <p>
-                        <em>False-safe = collision episodes where the safety switch never fired.</em>
-                    </p>
-
-                    <p>
-                        Adaptation fixed the far-goal problem almost perfectly. But it created a new everyday-safety problem. Everyday false-safe rose about 7x. A clean IID vs far-goal trade-off appeared.
-                    </p>
-
-                    <div class="media-container">
-                        <div class="media-box">
-                            <div class="media-label">IID Diagnostic (seed-21)</div>
-                            <img src="abs_iid_diag.png" alt="IID diagnostic showing value distributions and collision attribution" class="demo-img">
-                        </div>
-                    </div>
-
-                    <p style="margin-top: 8px; font-size: 13px; color: var(--text-muted); text-align: center;">
-                        Per-step value distributions and collision attribution for the IID condition. The frozen RA shows clear separation between collision and non-collision steps.
-                    </p>
-
-                    <div class="media-container">
-                        <div class="media-box">
-                            <div class="media-label">S5 Diagnostic (seed-21)</div>
-                            <img src="abs_s5_diag.png" alt="S5 diagnostic showing inverted value ordering under far-goal shift" class="demo-img">
-                        </div>
-                    </div>
-
-                    <p style="margin-top: 8px; font-size: 13px; color: var(--text-muted); text-align: center;">
-                        Per-step value distributions and collision attribution for the far-goal (S5) condition. Note the inverted ordering: the value map no longer ranks collision steps as more risky.
-                    </p>
-
-                    <hr>
-
-                    <h3>Mechanism: Value-Map Ordering Failure</h3>
-
-                    <p>
-                        At first this looked like a calibration problem: the threshold just needs to move. Recalibration does move the operating point, as the fitted-threshold result shows later, but it does not fix the ordering problem underneath.
-                    </p>
-
-                    <p>
-                        With a near-unit discount, the Bellman targets are almost entirely the network's own predictions. Only about 0.2% of the training data carries a grounded "this is dangerous" label. These are the collision cases, relabeled by hindsight. That tiny signal gets pushed through a 65-parameter linear head, which cannot localize it to the states where it matters. So it smears the whole value map downward.
-                    </p>
-
-                    <p>
-                        The bulk of the map drifts below the switch threshold (frozen mean -0.72 to adapted -0.84). The decision region around the threshold empties out (activation drops from 7.6% to 4.4% per step). The switch starts missing ordinary dangerous situations. 74-77% of everyday collision steps happen with the switch off.
-                    </p>
-
-                    <p>
-                        The initial degradation came from the value map shifting around the switch boundary. Changing the switch threshold could move the operating point, but in this tested setup it did so at the cost of useful behavior.
-                    </p>
-
-                    <hr>
-
-                    <h3>Repair Experiments</h3>
-
-                    <p>
-                        Three intuitive repair directions were tested. Each once. Each with predeclared gates.
-                    </p>
-
-                    <h4>1. Better training data</h4>
-                    <p>
-                        The causal factor is the replay's collision content, so two ways to change the data were tested. Enrich the replay with collision cases while keeping the original state distribution: pooled everyday false-safe stayed at 0.47% (per-seed 0.41 to 0.53%). Reweight replay states to match the original distribution: 0.38%. Neither moved the everyday penalty away from the 0.40% level of the standard adaptation. The data content is the cause, but changing the data content does not fix the everyday degradation.
-                    </p>
-
-                    <h4>2. Repair the training target</h4>
-                    <p>
-                        Anchor the target to the frozen prior (hard clamp or soft blend). Soft blend: inert. Hard clamp: the mechanism worked, the map came back, but it overshot. Recovery fired on 92 to 99.6% of episodes. Far-goal reach collapsed to about 1% and timeouts reached 92%. False-safe fell to 0.000%, but the gain was vacuous: total collisions rose above the frozen baseline (7.1% everyday, 6.6% far-goal). The robot just hid in recovery.
-                    </p>
-
-                    <h4>3. Smarter switch rules</h4>
-                    <p>
-                        A threshold fitted on calibration data. Episode-level persistence (once recovery fires, keep it on for the episode). The best admissible threshold still left everyday false-safe at 0.25%, above the 0.20% gate. Persistence changed nothing (everyday false-safe moved by less than 0.01 percentage point), and it could not rescue the frozen head's far-goal failure either.
-                    </p>
-
-                    <p>
-                        The three repair directions tested (data, target, decision rule) each failed on at least one predeclared gate.
-                    </p>
-
-                    <hr>
-
-                    <h3>Independent Replication: Second Base Policy</h3>
-
-                    <p>
-                        The remaining question was whether this was specific to one checkpoint.
-                    </p>
-
-                    <p>
-                        The entire pipeline was run on a second, independently trained base policy. Fresh safety value, fresh data buffer, fresh adaptation, fresh threshold fit, same held-out seeds.
-                    </p>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Metric</th>
-                                <th style="text-align:right">Instance #1 (seed-0)</th>
-                                <th style="text-align:right">Instance #2 (seed-1)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Everyday (IID) false-safe, adapted</strong></td>
-                                <td style="text-align:right">0.404%</td>
-                                <td style="text-align:right">0.619%</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Far-goal (S5) false-safe, adapted</strong></td>
-                                <td style="text-align:right">0.010%</td>
-                                <td style="text-align:right">0.088%</td>
-                            </tr>
-                            <tr>
-                                <td>Everyday reach, adapted</td>
-                                <td style="text-align:right">82.7%</td>
-                                <td style="text-align:right">79.7%</td>
-                            </tr>
-                            <tr>
-                                <td>Far-goal reach, adapted</td>
-                                <td style="text-align:right">62.0%</td>
-                                <td style="text-align:right">77.8%</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <p>
-                        The same qualitative trade-off appeared again. The far-goal safety gain reproduced. The everyday penalty reproduced. This time on a second, independently selected base policy, so it was not specific to the first checkpoint. By the predeclared gate set, the full replication was not confirmed in one respect: the fitted-threshold floor from the first instance did not reproduce. That surprise is the subject of the next section.
-                    </p>
-
-                    <hr>
-
-                    <h3>Operating Point: The Threshold Surprise</h3>
-
-                    <p>
-                        A fresh switch threshold was then fitted for the second instance (on calibration data only). The fitted threshold dramatically reduced everyday false-safe (0.619% to 0.032%) and far-goal false-safe (to 0.000%).
-                    </p>
-
-                    <p>
-                        But the cost was severe:
-                    </p>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Metric</th>
-                                <th style="text-align:right">Per-step rule</th>
-                                <th style="text-align:right">Fitted threshold</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Everyday false-safe</td>
-                                <td style="text-align:right">0.619%</td>
-                                <td style="text-align:right"><strong>0.032%</strong></td>
-                            </tr>
-                            <tr>
-                                <td>Far-goal false-safe</td>
-                                <td style="text-align:right">0.088%</td>
-                                <td style="text-align:right"><strong>0.000%</strong></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Far-goal reach</strong></td>
-                                <td style="text-align:right"><strong>77.8%</strong></td>
-                                <td style="text-align:right"><strong>12.2%</strong></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Timeouts</strong></td>
-                                <td style="text-align:right">17.0%</td>
-                                <td style="text-align:right"><strong>78.2%</strong></td>
-                            </tr>
-                            <tr>
-                                <td>Recovery activation (steps)</td>
-                                <td style="text-align:right">7.7%</td>
-                                <td style="text-align:right"><strong>81.6%</strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <p>
-                        The "irreducible floor" interpretation from the first instance was rejected. Safety can be bought, but only by making the robot unusably conservative. Far-goal reach collapsed from 77.8% to 12.2%. 78% of episodes timed out. The robot almost stops moving.
-                    </p>
-
-                    <p>
-                        The fitted-threshold outcome on the first instance gave a similar pattern (0.25% everyday false-safe at its calibration optimum, above the 0.20% gate, with reach also degraded). Two instances of the same shape: the threshold that buys safety does so by firing recovery far more often, and reach pays the price.
-                    </p>
-
-                    <hr>
-
-                    <h3>Mechanism Interpretation</h3>
-
-                    <p>
-                        A safety-critical switching value is only as good as the labels that pin it. With near-unit discounting and self-generated targets, the value of ordinary states is set almost entirely by its own future values. A tiny set of correct labels (the hindsight-relabelled collision steps) gets spread through a small linear head across the whole map, quietly moving the bulk of the map away from the switch boundary.
-                    </p>
-
-                    <p>
-                        The evidence points to the value map's ordering as the main source of the degradation. The switch threshold can move the operating point, but in this setup the safety gain came at the cost of useful behavior. The method class is flanked by two failure modes:
-                    </p>
-
-                    <ul>
-                        <li><strong>Depopulation</strong>: the switch misses unsafe states (everyday false-safe goes up)</li>
-                        <li><strong>Over-activation</strong>: the robot hides in recovery (reach collapses, timeouts dominate)</li>
-                    </ul>
-
-                    <p>
-                        The gap between them is the usable operating region. Narrow, and not found by any tested repair.
-                    </p>
-
-                    <hr>
-
-                    <h3>Limitations</h3>
-
-                    <ul>
-                        <li>One task (point-goal locomotion with obstacles), one shift type (goal distance), two independently selected base policies.</li>
-                        <li>Smoke-scale evaluation depth (~1,000 environments; ~7,000 steps per held-out seed; 420-second runs). Not the paper's full-length evaluation.</li>
-                        <li>No paper-scale adaptation budget was tested.</li>
-                        <li>Capacity questions (wider head, unfrozen backbone) were explicitly not tested.</li>
-                        <li>No other tasks, other shifts, other simulators, or real robot.</li>
-                        <li>This does not prove online adaptation is unsafe in general. It characterizes a specific trade-off in this specific setup.</li>
-                    </ul>
-
-                    <hr>
-
-                    <h3>Conclusion</h3>
-
-                    <p>
-                        The project began by looking for a way to adapt the safety value to a new regime. The result was not a better method. The useful part was finding a trade-off that reproduced on a second base policy and understanding some of the reasons behind it. No way around that trade-off has been found.
-                    </p>
-
-                    
-
-                    <div class="github-link">
-                        <a href="https://github.com/1sznkaveesh/ABS" target="_blank" class="utility-download-btn">To GitHub</a>
-                    </div>
-                </div>
-            </article>
-        </main>
-        
-    </div>
+        <div class="prose">
+
+            <p>
+                The question was whether adapting the safety value online could address the known distribution-shift
+                failure. The paper already notes that the frozen value can fail under distribution shift, so retraining
+                it from the robot's own experience was a direct next step.
+            </p>
+
+            <h2 id="background">Background: the ABS system</h2>
+
+            <p>
+                <a href="https://arxiv.org/abs/2401.17583" target="_blank" rel="noopener"><em>Agile But Safe</em></a>
+                (He et al., RSS 2024) makes a legged robot both fast and safe. The core idea is that one policy cannot
+                do both, so it trains two. The <strong>agile policy</strong> runs fast toward goals. The
+                <strong>recovery policy</strong> is slow and conservative, and knows how to back away from obstacles.
+            </p>
+
+            <p>
+                The glue between them is a small neural network (19 &rarr; 64 &rarr; 64 &rarr; 1, Tanh output) that
+                outputs a <strong>safety value</strong>. If that value crosses <code>-0.05</code>, the system switches to
+                recovery. Below the threshold, the agile policy drives.
+            </p>
+
+            <p>
+                Within the conditions it was trained for (goals 1.5 to 7.5 m away, per the paper and the released
+                configuration), this works. The released testbed exercises the 6 to 7.5 m band, and in my reproduction
+                runs the recovery policy cuts collisions from ~18% (with no safety value) to ~5%, close to the paper's
+                reported effect. The paper's failure-cases section limits its own guarantee: in its words, the policy switch
+                can push the safety value's inputs outside the distribution it was trained on. In my runs, that failure
+                appeared concretely under far-goal shift, with goals much farther away than the trained range.
+            </p>
+
+            <figure>
+                <img src="../assets/img/abs-stratification.png" alt="Four panels against goal distance: collision probability, AUC of the value for collisions, false-safe fraction, and mean predicted value, for in-distribution (IID) and far-goal (S5) conditions." loading="lazy">
+                <figcaption>
+                    <b>Figure 1.</b> The frozen reach-avoid value, stratified by goal distance (dashed line: edge of the
+                    training range). Under far-goal shift (S5, red), the value's ability to rank collision steps (AUC) drops
+                    below 0.5.
+                </figcaption>
+            </figure>
+
+            <h2 id="setup">Experimental setup</h2>
+
+            <p>
+                The released ABS implementation was reproduced end to end on the official code (Isaac Gym, Unitree Go1
+                simulation). The reproduction was at smoke scale: ~1,000 parallel environments, ~7,000 steps per held-out
+                evaluation seed, 420-second runs. This is not the paper's full-length evaluation.
+            </p>
+
+            <p>
+                The safety value network (RA value) takes a 19-dimensional input: base linear velocity (3), base angular
+                velocity (3), goal position in the body frame (2), and 11 log ray distances. It is a 3-layer MLP with a
+                Tanh head, trained with a Bellman-MSE loss, a near-unit discount (<code>&gamma; = 0.999999</code>) and
+                hindsight relabeling: when a collision happens, the last 10 steps are relabeled as risky.
+            </p>
+
+            <p>
+                For the adaptation study, the backbone was frozen and only the final linear head (65 parameters) was
+                trained. The robot collected data with the recovery switch disabled (recovery-OFF), so it saw the full
+                consequences of its actions. Adaptation used SGD with a 1:1 mix of online and replay data and L2
+                regularization toward the frozen head, for 3 rounds of 45,000 environment steps each.
+            </p>
+
+            <p>
+                Evaluation used held-out seeds 23, 24 and 25, which were never touched by any training or calibration
+                decision. Two independently selected base policies were tested (seed 0 at checkpoint 3000 and seed 1 at
+                checkpoint 2000), both passing the same pre-declared selection rule.
+            </p>
+
+            <h3>What I added to the baseline</h3>
+
+            <p>The original ABS code was never modified. All adaptation logic runs in external scripts that re-execute the environment loop with the adapted head.</p>
+
+            <ul>
+                <li>Recovery-OFF rollout collection, so the robot experiences full consequences without the switch intervening.</li>
+                <li>Deterministic replay construction from the IID rollouts (2M tuples; the frozen head recomputes targets).</li>
+                <li>A frozen-backbone, 65-parameter head-only adaptation loop.</li>
+                <li>A 1:1 online + replay training mix with L2 regularization toward the frozen head.</li>
+                <li>Evaluation and diagnostic tooling: per-step value logging, false-safe attribution, and a held-out seed protocol.</li>
+                <li>Three repair experiment families: replay content, target formulation and decision rule.</li>
+                <li>A second-base-policy replication pipeline (fresh base policy, RA value, data, adaptation and threshold fit).</li>
+            </ul>
+
+            <h2 id="results">Result: frozen vs. adapted</h2>
+
+            <p>
+                The frozen safety value was first measured under far-goal shift (goals 9 to 11 m, called S5) and under
+                everyday, in-distribution conditions (IID). The head was then retrained online and evaluated on the same
+                held-out seeds. The adapted head is labeled O/O: it was trained on a 1:1 mix of offline replay and online
+                data, both collected with recovery disabled.
+            </p>
+
+            <div class="table-wrap">
+                <table>
+                    <caption>Table 1. Frozen vs. adapted safety value (instance #1). False-safe = collision episodes in which the safety switch never fired.</caption>
+                    <thead>
+                        <tr><th>Metric</th><th class="num">Frozen</th><th class="num">Adapted (O/O)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Everyday (IID) false-safe</td><td class="num">0.060%</td><td class="num hl">0.404%</td></tr>
+                        <tr><td>Far-goal (S5) false-safe</td><td class="num">0.974%</td><td class="num hl">0.010%</td></tr>
+                        <tr><td>Everyday reach</td><td class="num">79.3%</td><td class="num">82.7%</td></tr>
+                        <tr><td>Far-goal reach</td><td class="num">50.9%</td><td class="num">62.0%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>
+                Adaptation fixed the far-goal problem almost completely, but created a new everyday-safety problem:
+                everyday false-safe rose about 7&times;. A clean IID vs. far-goal trade-off appeared.
+            </p>
+
+            <figure>
+                <img src="../assets/img/abs-iid-diag.png" alt="Per-step value distributions and collision attribution for the in-distribution condition, seed 21." loading="lazy">
+                <figcaption>
+                    <b>Figure 2.</b> Per-step value distributions and collision attribution, IID condition (seed 21). The
+                    frozen value separates collision and non-collision steps clearly.
+                </figcaption>
+            </figure>
+
+            <figure>
+                <img src="../assets/img/abs-s5-diag.png" alt="Per-step value distributions and collision attribution for the far-goal condition, seed 21, showing inverted ordering." loading="lazy">
+                <figcaption>
+                    <b>Figure 3.</b> The same diagnostic under far-goal shift (S5, seed 21). The ordering is inverted: the
+                    value map no longer ranks collision steps as more risky.
+                </figcaption>
+            </figure>
+
+            <h2 id="mechanism">Mechanism: the value map drifts off the switching boundary</h2>
+
+            <p>
+                At first this looked like a calibration problem that a moved threshold would fix. Recalibration does move
+                the operating point, as the fitted-threshold result below shows, but it does not fix the ordering problem
+                underneath.
+            </p>
+
+            <p>
+                With a near-unit discount, the Bellman targets are almost entirely the network's own predictions. Only
+                about 0.2% of the training data carries a grounded "this is dangerous" label: the collision cases,
+                relabeled in hindsight. That small signal is pushed through a 65-parameter linear head, which cannot
+                localize it to the states where it matters, so it shifts the whole value map downward.
+            </p>
+
+            <p>
+                The bulk of the map drifts below the switch threshold (mean value &minus;0.72 frozen vs. &minus;0.84
+                adapted). The decision region around the threshold empties out (per-step activation drops from 7.6% to
+                4.4%), and the switch starts missing ordinary dangerous situations: 74&ndash;77% of everyday collision
+                steps happen with the switch off.
+            </p>
+
+            <h2 id="repairs">Repair experiments</h2>
+
+            <p>Three intuitive repair directions were tested, each once, each against pre-declared gates.</p>
+
+            <h3>1. Better training data</h3>
+            <p>
+                Since the replay's collision content is the causal factor, two ways of changing the data were tested.
+                Enriching the replay with collision cases while keeping the original state distribution left pooled
+                everyday false-safe at 0.47% (per-seed 0.41&ndash;0.53%). Reweighting replay states to match the original
+                distribution gave 0.38%. Neither moved the everyday penalty away from the 0.40% of standard adaptation:
+                the data content is the cause, but changing it does not remove the degradation.
+            </p>
+
+            <h3>2. Repair the training target</h3>
+            <p>
+                Anchoring the target to the frozen prior, as a soft blend or a hard clamp. The soft blend was inert. The
+                hard clamp worked mechanically (the map came back) but overshot: recovery fired in 92&ndash;99.6% of
+                episodes, far-goal reach collapsed to about 1% and timeouts reached 92%. False-safe fell to 0.000%, but
+                the gain was vacuous. Total collisions rose above the frozen baseline (7.1% everyday, 6.6% far-goal);
+                the robot simply hid in recovery.
+            </p>
+
+            <h3>3. Smarter switching rules</h3>
+            <p>
+                A threshold fitted on calibration data, and episode-level persistence (once recovery fires, it stays on).
+                The best admissible threshold still left everyday false-safe at 0.25%, above the 0.20% gate. Persistence
+                changed everyday false-safe by less than 0.01 percentage points and could not rescue the frozen head's
+                far-goal failure either.
+            </p>
+
+            <h2 id="replication">Independent replication on a second base policy</h2>
+
+            <p>
+                To check whether this was specific to one checkpoint, the entire pipeline was rerun on a second,
+                independently trained base policy, with a fresh safety value, data buffer, adaptation and threshold fit,
+                on the same held-out seeds.
+            </p>
+
+            <div class="table-wrap">
+                <table>
+                    <caption>Table 2. Adapted safety value on two independently selected base policies.</caption>
+                    <thead>
+                        <tr><th>Metric (adapted)</th><th class="num">Instance #1 (seed 0)</th><th class="num">Instance #2 (seed 1)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Everyday (IID) false-safe</td><td class="num">0.404%</td><td class="num">0.619%</td></tr>
+                        <tr><td>Far-goal (S5) false-safe</td><td class="num">0.010%</td><td class="num">0.088%</td></tr>
+                        <tr><td>Everyday reach</td><td class="num">82.7%</td><td class="num">79.7%</td></tr>
+                        <tr><td>Far-goal reach</td><td class="num">62.0%</td><td class="num">77.8%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>
+                The same qualitative trade-off appeared again: the far-goal safety gain and the everyday penalty both
+                reproduced. Under the pre-declared gate set, the full replication was not confirmed in one respect: the
+                fitted-threshold floor from the first instance did not reproduce, as described next.
+            </p>
+
+            <h2 id="threshold">The operating-point surprise</h2>
+
+            <p>
+                A fresh switching threshold was fitted for the second instance, on calibration data only. It sharply
+                reduced everyday false-safe (0.619% &rarr; 0.032%) and far-goal false-safe (to 0.000%), but at a severe cost:
+            </p>
+
+            <div class="table-wrap">
+                <table>
+                    <caption>Table 3. Instance #2: default per-step rule vs. a threshold fitted on calibration data.</caption>
+                    <thead>
+                        <tr><th>Metric</th><th class="num">Per-step rule</th><th class="num">Fitted threshold</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Everyday false-safe</td><td class="num">0.619%</td><td class="num">0.032%</td></tr>
+                        <tr><td>Far-goal false-safe</td><td class="num">0.088%</td><td class="num">0.000%</td></tr>
+                        <tr><td>Far-goal reach</td><td class="num">77.8%</td><td class="num hl">12.2%</td></tr>
+                        <tr><td>Timeouts</td><td class="num">17.0%</td><td class="num hl">78.2%</td></tr>
+                        <tr><td>Recovery activation (steps)</td><td class="num">7.7%</td><td class="num hl">81.6%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>
+                This rejects the "irreducible floor" interpretation suggested by the first instance. Safety can be bought,
+                but only by making the robot so conservative that 78% of episodes time out. The first instance showed a
+                similar pattern (0.25% everyday false-safe at its calibration optimum, with reach also degraded). In both
+                instances, the threshold that buys safety does so by firing recovery far more often, and reach pays for it.
+            </p>
+
+            <h2 id="interpretation">Interpretation</h2>
+
+            <p>
+                A safety-critical switching value is only as good as the labels that pin it down. With near-unit
+                discounting and self-generated targets, the value of ordinary states is set almost entirely by its own
+                future values. A small set of grounded labels (the hindsight-relabeled collision steps), spread through a
+                small linear head, quietly moves the bulk of the map away from the switching boundary.
+            </p>
+
+            <p>The tested method class sits between two failure modes:</p>
+
+            <ul>
+                <li><strong>Depopulation:</strong> the switch misses unsafe states, and everyday false-safe rises.</li>
+                <li><strong>Over-activation:</strong> the robot hides in recovery, reach collapses, and timeouts dominate.</li>
+            </ul>
+
+            <p>The usable operating region between them is narrow, and none of the tested repairs found it.</p>
+
+            <h2 id="limitations">Limitations</h2>
+
+            <ul>
+                <li>One task (point-goal locomotion with obstacles), one shift type (goal distance), two independently selected base policies.</li>
+                <li>Smoke-scale evaluation (~1,000 environments, ~7,000 steps per held-out seed, 420-second runs), not the paper's full-length evaluation.</li>
+                <li>No paper-scale adaptation budget was tested.</li>
+                <li>Capacity questions (a wider head, an unfrozen backbone) were explicitly not tested.</li>
+                <li>No other tasks, shifts or simulators, and no real robot.</li>
+                <li>This does not show that online adaptation is unsafe in general. It characterizes a specific trade-off in this specific setup.</li>
+            </ul>
+
+            <h2 id="conclusion">Conclusion</h2>
+
+            <p>
+                The project set out to adapt the safety value to a new regime. The result was not a better method. The
+                useful outcome is a trade-off that reproduces on a second base policy, together with a partial
+                explanation of why it happens. I have not found a way around it.
+            </p>
+
+        </div>
+
+        <div class="article-end">
+            <a class="btn btn-primary" href="https://github.com/1sznkaveesh/ABS" target="_blank" rel="noopener">Code on GitHub</a>
+            <a class="btn" href="https://arxiv.org/abs/2401.17583" target="_blank" rel="noopener">Original ABS paper</a>
+            <a class="btn" href="../index.html#research">&larr; Back home</a>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <span>&copy; 2026 Kaveesh Chaudhari</span>
+            <span><a href="https://github.com/1sznkaveesh" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/kaveesh-chaudhari-2136822a4/" target="_blank" rel="noopener">LinkedIn</a></span>
+        </div>
+    </footer>
 
 </body>
 </html>

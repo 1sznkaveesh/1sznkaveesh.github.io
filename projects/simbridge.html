@@ -3,197 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>F1 Sim Rig Telemetry Bridge | Kaveesh</title>
+    <title>A Motion Rig for Racing Games | Kaveesh Chaudhari</title>
+    <meta name="description" content="A Python bridge from Assetto Corsa telemetry to an Arduino-driven two-motor motion rig.">
+    <meta name="author" content="Kaveesh Chaudhari">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232c6a58'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' font-weight='600' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400;1,8..60,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
-    <style>
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 32px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-family: var(--font-heading);
-            font-size: 14px;
-            transition: color 0.2s ease;
-        }
-        .back-btn:hover {
-            color: var(--accent);
-        }
-        .project-body-text {
-            color: var(--text-muted);
-            font-size: 15px;
-            line-height: 1.8;
-            max-width: 800px;
-        }
-        .project-body-text p {
-            margin-bottom: 24px;
-        }
-        .status-badge {
-            display: inline-block;
-            background: rgba(79, 140, 255, 0.1);
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            font-family: var(--font-heading);
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 6px 14px;
-            border-radius: 4px;
-            margin-bottom: 24px;
-        }
-        .todo-box {
-            background: var(--bg-card);
-            border-left: 3px solid var(--accent);
-            padding: 20px;
-            margin: 32px 0;
-            border-radius: 0 8px 8px 0;
-        }
-        .todo-title {
-            font-family: var(--font-heading);
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .todo-list {
-            margin-left: 18px;
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-        .todo-list li {
-            margin-bottom: 6px;
-        }
-        
-        /* Updated Media layout matching your Swarm project styling */
-        .media-container {
-            margin: 32px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-            max-width: 800px;
-        }
-        .media-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-line);
-            border-radius: 8px;
-            padding: 16px;
-        }
-        .media-label {
-            font-family: var(--font-heading);
-            font-size: 12px;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-            font-weight: 700;
-        }
-        video {
-            width: 100%;
-            border-radius: 4px;
-            display: block;
-            background: #000;
-        }
-    </style>
 </head>
 <body>
 
-    <div class="app-container">
-        
-        <aside class="app-sidebar">
-            <div class="sidebar-top">
-                <div class="brand-group">
-                    <h1 class="logo-title">KAVEESH CHAUDHARI</h1>
-                </div>
-                <p class="meta-tagline">Project Breakdown.</p>
-                <nav class="app-nav">
-                    <a href="../index.html" class="nav-btn">← RETURN HOME</a>
-                </nav>
+    <header class="site-header">
+        <div class="container">
+            <a href="../index.html" class="site-name">Kaveesh Chaudhari</a>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="../index.html#research">Research</a>
+                <a href="../index.html#projects">Projects</a>
+                <a href="https://drive.google.com/file/d/1AUieMIezUhRojSnfZZ9DG1ku7m9eyF67/view?usp=sharing" target="_blank" rel="noopener">CV</a>
+                <a href="../index.html#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container article">
+        <a href="../index.html#projects" class="back-link">&larr; Back home</a>
+
+        <p class="article-kicker">Project · Python · Arduino · Hardware</p>
+        <h1>A motion rig for racing games</h1>
+        <p class="lede">
+            The software side of a home-built motion rig. Live physics telemetry from Assetto Corsa is turned into
+            motor targets and sent to an Arduino driving two DC motors, so the seat moves with the car.
+        </p>
+
+        <div class="article-meta">
+            <span class="status in-progress">In progress</span>
+            <span>Python · Arduino · SMC3</span>
+            <a href="https://github.com/1sznkaveesh/F1_Sim_Rig_Bridge" target="_blank" rel="noopener">Code</a>
+        </div>
+
+        <figure>
+            <video controls preload="metadata" playsinline poster="../assets/img/simrig-motor-poster.jpg">
+                <source src="../assets/video/simrig-motor-demo.mp4" type="video/mp4">
+                Your browser does not support embedded video. <a href="../assets/video/simrig-motor-demo.mp4">Download the clip</a>.
+            </video>
+            <figcaption><b>Video 1.</b> Short demonstration of telemetry-to-motor mapping.</figcaption>
+        </figure>
+
+        <div class="prose">
+
+            <h2 id="architecture">Architecture</h2>
+
+            <ul class="components">
+                <li>
+                    <strong>Telemetry processing</strong>
+                    A Python script interfaces with Assetto Corsa's telemetry API and reads live physics data
+                    (accelerations, orientation and force terms) from the game.
+                </li>
+                <li>
+                    <strong>Actuator mixing</strong>
+                    Vehicle motion is mixed into per-motor targets. Pitch loads both channels equally, while roll shifts
+                    the balance between them in opposite directions.
+                </li>
+                <li>
+                    <strong>Hardware bridge</strong>
+                    Targets are streamed over USB serial to an Arduino Uno running SMC3, which closes the position loop
+                    for each motor with PID control using potentiometer feedback.
+                </li>
+            </ul>
+
+            <div class="media-split">
+                <figure class="portrait">
+                    <img src="../assets/img/simrig-telemetry.jpg" alt="Laptop terminal printing live speed, RPM, gear, steering, surge, sway and heave values from the game." loading="lazy">
+                    <figcaption><b>Figure 1.</b> Live telemetry stream from the bridge: speed, RPM, gear, steering, and surge/sway/heave values.</figcaption>
+                </figure>
+                <p>
+                    The bridge prints the decoded telemetry as it runs. The surge, sway and heave channels are the
+                    inputs to the mixer, so this output was the main debugging tool when tuning the mapping from vehicle
+                    motion to motor positions.
+                </p>
             </div>
-        </aside>
 
-        <main class="app-main-content">
-            <article class="content-block">
-                <a href="../index.html" class="back-btn">← Back to Dashboard</a>
-                
-                <div class="block-header">
-                    <h2 class="block-heading">F1 Sim Rig Telemetry Bridge</h2>
-                </div>
+            <figure>
+                <img src="../assets/img/simrig-wiring.jpg" alt="Wiring diagram: Arduino Uno connected to two motor driver boards, two geared DC motors and two feedback potentiometers, with 12 V supplies." loading="lazy">
+                <figcaption><b>Figure 2.</b> Hardware wiring: an Arduino Uno, two motor driver boards, two geared DC motors with potentiometer position feedback, and 12 V supplies.</figcaption>
+            </figure>
 
-                <div class="media-container">
-                    <div class="media-box">
-                        <div class="media-label">Small demonstration of motor-mapping</div>
-                        <video controls preload="metadata">
-                            <source src="Vid1.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-                </div>
-                
-                <div class="project-body-text">
-                    <div class="status-badge" style="margin-bottom: 16px;">Active Deployment / Updates Ongoing</div>
+            <figure>
+                <img src="../assets/img/simrig-smc3.jpg" alt="SMC3 Windows utility showing motor tuning parameters and live position traces." loading="lazy">
+                <figcaption><b>Figure 3.</b> The SMC3 utility, used for motor tuning and setup.</figcaption>
+            </figure>
 
-                    <p style="margin-bottom: 16px;">
-                        This codebase builds out the core software translation layer for a motion simulation racing rig. Designed directly around the Assetto Corsa physics engine ecosystem, the framework establishes high-frequency hooks to intercept real-time game telemetry data packet matrices to drive external physical motion mechanisms.
-                    </p>
+            <h2 id="next">Next steps</h2>
 
-                    <hr style="border: 0; border-top: 1px solid var(--border-line); margin: 20px 0;">
-                    <div class="media-container" style="margin-top: 32px;">
-                        <div class="media-box">
-                            <div class="media-label">A rough idea of current hardware setup</div>
-                            <img src="Pic3.jpg" alt="Sim Rig Electrical Wiring Schematic Arduino Motor Drivers and Potentiometers" style="width: 100%; height: auto; display: block; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.05); background: #fff;">
-                        </div>
-                    </div>
-                    <h3 style="margin-top: 0; margin-bottom: 12px;">F1 Simulator Rig Architecture</h3>
-                    <p style="margin-bottom: 16px;">
-                        The layout uses localized matrix coefficients to blend incoming structural demands and translate simulation states directly to physical motor positions:
-                    </p>
-                    
-                    <ul style="list-style-type: none; padding-left: 0; display: flex; flex-direction: column; gap: 16px; margin-bottom: 0;">
-                        <li style="padding-left: 16px; border-left: 2px solid var(--accent);">
-                            <strong>Telemetry Processing Layer</strong>
-                            <p style="margin-top: 4px; margin-bottom: 0; font-size: 14px;">
-                                Designed a custom Python telemetry mixer script to interface with the Assetto Corsa API. The framework parses live acceleration vector sheets, orientation angles, and dynamic force variables directly from the core game physics engine.
-                            </p>
-                        </li>
-                        <li style="padding-left: 16px; border-left: 2px solid var(--accent);">
-                            <strong>Hardware Communication Bridge</strong>
-                            <p style="margin-top: 4px; margin-bottom: 0; font-size: 14px;">
-                                Streamlined real-time telemetry distribution by piping calculated target parameters directly via a serial USB link. This feeds instruction arrays to an Arduino Uno running the SMC3 utility for closed-loop motor driver control.
-                            </p>
-                        </li>
-                        <li style="padding-left: 16px; border-left: 2px solid var(--accent);">
-                            <strong>Actuator Matrix Mixing</strong>
-                            <p style="margin-top: 4px; margin-bottom: 0; font-size: 14px;">
-                                Routes synchronized game physics states into mixed actuator control signals. For example, pitch configurations scale load requirements evenly across channels, while roll vectors shift the balance inversely to map targets directly to PID controller arrays.
-                            </p>
-                        </li>
-                    </ul>
-                    <div class="media-container" style="margin-top: 32px;">
-                        <div class="media-box">
-                            <div class="media-label">SMC3 Windows Utility — Motor Tuning & Setup</div>
-                            <img src="Pic2.jpg" alt="SMC3 Setup and Monitor Utility Dashboard Parameters" style="width: 100%; height: auto; display: block; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.05);">
-                        </div>        
-                    </div>
-                    <hr style="border: 0; border-top: 1px solid var(--border-line); margin: 24px 0;">
+            <p>
+                Current work is tuning the mixing coefficients so that high-frequency vibration is separated from the
+                larger positioning movements, which should keep tracking stable under rapid multi-axis load changes.
+            </p>
 
-                    <h3 style="margin-top: 0; margin-bottom: 12px;">Development Roadmap</h3>
-                    <p style="margin-bottom: 0;">
-                        Current optimization tasks involve fine-tuning localized matrix coefficients within the Python mixing logic to isolate high-frequency structural vibrations from primary macro-positioning movements. This ensures precise tracking stability under rapid multi-axis load changes.
-                    </p>
-                </div>
+        </div>
 
-                <div style="margin-top: 32px;">
-                    <a href="https://github.com/1sznkaveesh/F1_Sim_Rig_Bridge" target="_blank" class="utility-download-btn">To GitHub</a>
-                </div>
-            </article>
-        </main>
-        
-    </div>
+        <div class="article-end">
+            <a class="btn btn-primary" href="https://github.com/1sznkaveesh/F1_Sim_Rig_Bridge" target="_blank" rel="noopener">Code on GitHub</a>
+            <a class="btn" href="../index.html#projects">&larr; Back home</a>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <span>&copy; 2026 Kaveesh Chaudhari</span>
+            <span><a href="https://github.com/1sznkaveesh" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/kaveesh-chaudhari-2136822a4/" target="_blank" rel="noopener">LinkedIn</a></span>
+        </div>
+    </footer>
 
 </body>
 </html>

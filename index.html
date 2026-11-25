@@ -3,133 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaveesh | Portfolio</title>
+    <title>Kaveesh Chaudhari</title>
+    <meta name="description" content="Kaveesh Chaudhari, a robotics student at BITS Pilani, Hyderabad, who reproduces and pokes at reinforcement-learning methods for legged robots.">
+    <meta name="author" content="Kaveesh Chaudhari">
+    <meta property="og:title" content="Kaveesh Chaudhari">
+    <meta property="og:description" content="Robotics student at BITS Pilani, Hyderabad, working on robot learning for legged robots.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232c6a58'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' font-weight='600' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400;1,8..60,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="app-container">
-        
-        <aside class="app-sidebar">
-            <div class="sidebar-top">
-                <div class="brand-group">
-                    <h1 class="logo-title">KAVEESH CHAUDHARI</h1>
+    <header class="site-header">
+        <div class="container">
+            <a href="index.html" class="site-name">Kaveesh Chaudhari</a>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="#research">Research</a>
+                <a href="#projects">Projects</a>
+                <a href="https://drive.google.com/file/d/1AUieMIezUhRojSnfZZ9DG1ku7m9eyF67/view?usp=sharing" target="_blank" rel="noopener">CV</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container wide">
+
+        <section class="intro" aria-labelledby="hello">
+            <div class="intro-text">
+                <div class="intro-top">
+                    <!-- Add a photo of yourself here; it makes the page feel much more personal:
+                    <img class="avatar" src="assets/img/me.jpg" alt="Kaveesh Chaudhari">
+                    -->
+                    <div>
+                        <h1 id="hello">Hi, I'm Kaveesh.</h1>
+                        <p class="role">Robotics student · BITS Pilani, Hyderabad Campus</p>
+                    </div>
                 </div>
-                <p class="meta-tagline">Hey, I'm Kaveesh! I'm currently in my 2nd year at BITS Pilani, Hyderabad Campus and exploring the world of robotics. My first year was all about trial & error stepping foot into various softwares and core robotics topics just to see what sticks. I'm early in my journey, highly driven to expand my skillset and looking for hands-on opportunities to learn from real-world engineering challenges!</p>
-                
-                <nav class="app-nav">
-                    <a href="#blog" class="nav-btn active">BLOGS / POSTS</a>
-                    <a href="#projects" class="nav-btn">FEATURED WORK</a>
-                    <a href="#resume" class="nav-btn">RESUME</a>
-                    <a href="#contact" class="nav-btn">CONTACT</a>
-                </nav>
+
+                <p>
+                    I'm a second-year student at BITS Pilani, Hyderabad, and I like building and understanding robots.
+                </p>
+                <p>
+                    My first year was mostly trial and error. I tried a bit of everything to see what would stick,
+                    and along the way built a camera-only SLAM robot, a small multi-robot path-planning simulator,
+                    and a motion rig for racing games out of an Arduino and two motors. Somewhere in all that, I became
+                    fascinated by <span class="hl">reinforcement learning</span>.
+                </p>
+                <p>
+                    Lately I've been reproducing RL papers for legged robots and trying to understand how they actually
+                    work, including the parts that don't. I'm still early in this and have a lot to learn, and I hope to
+                    keep learning more about it.
+                </p>
+
+                <div class="link-row">
+                    <a class="btn btn-primary" href="https://drive.google.com/file/d/1AUieMIezUhRojSnfZZ9DG1ku7m9eyF67/view?usp=sharing" target="_blank" rel="noopener">Read my CV</a>
+                    <a href="https://github.com/1sznkaveesh" target="_blank" rel="noopener">GitHub</a>
+                    <a href="https://www.linkedin.com/in/kaveesh-chaudhari-2136822a4/" target="_blank" rel="noopener">LinkedIn</a>
+                </div>
             </div>
-        </aside>
 
-        <main class="app-main-content">
-            
-            <section id="blog" class="content-block">
-                <div class="block-header">
-                    <h2 class="block-heading">Blogs / Posts</h2>
-                </div>
-                <div class="block-body blog-grid">
-                    
-                    <article class="blog-card">
-                        <div class="blog-thumbnail">
-                            <img src="projects/abs.jpg" alt="Agile But Safe project cover" loading="lazy">
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <span class="blog-tag">Reinforcement Learning / Robotics</span>
-                            </div>
-                            <h3 class="blog-title"><a href="projects/abs-online-adaptation.html" class="blog-title-link">Agile But Safe: Learning Collision-Free High-Speed Legged Locomotion</a></h3>
-                            <p class="blog-desc">Online adaptation of the recovery-switching safety value: far-goal safety improves, everyday safety degrades, and the trade-off reproduces across two independently selected base policies.</p>
-                            <a href="projects/abs-online-adaptation.html" class="blog-read-more">Read more</a>
-                        </div>
-                    </article>
+            <aside class="glance" aria-label="At a glance">
+                <h2>At a glance</h2>
+                <dl>
+                    <dt>Now</dt>
+                    <dd>Second-year student at BITS Pilani, Hyderabad Campus</dd>
 
-                    <article class="blog-card">
-                        <div class="blog-thumbnail">
-                            <img src="projects/dreamwaq.jpg" alt="DreamWaQ project cover" loading="lazy">
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <span class="blog-tag">Reinforcement Learning / Robotics</span>
-                            </div>
-                            <h3 class="blog-title"><a href="projects/dreamwaq.html" class="blog-title-link">DreamWaQ: Reproduction and Deployment-Robustness Investigation</a></h3>
-                            <p class="blog-desc">Reproduced and analyzed a legged-robot reinforcement-learning implementation using Isaac Gym and PyTorch. Investigated latent-policy sensitivity and the training-to-deployment velocity-input mismatch, implemented a targeted training ablation, and evaluated its limitations through controlled simulator experiments.</p>
-                            <a href="projects/dreamwaq.html" class="blog-read-more">Read more</a>
-                        </div>
-                    </article>
+                    <dt>Curious about</dt>
+                    <dd>
+                        <ul>
+                            <li>Control systems</li>
+                            <li>Physical AI systems</li>
+                            <li>RL for locomotion and navigation</li>
+                        </ul>
+                    </dd>
 
-                </div>
-            </section>
+                    <dt>Usually working with</dt>
+                    <dd>Python, PyTorch, Isaac Gym, ROS 2, Nav2, Gazebo, Arduino</dd>
+                </dl>
+            </aside>
+        </section>
 
-            <section id="projects" class="content-block">
-                <div class="block-header">
-                    <h2 class="block-heading">Featured Work</h2>
-                </div>
-                <div class="block-body project-grid">
-                    
-                    <div class="project-card">
-                        <div class="card-meta">
-                            <span class="card-tag">Multi-Agent Systems</span>
-                        </div>
-                        <h3 class="card-title"><a href="projects/swarm.html" class="project-title-link">Multi-Agent Swarm</a></h3>
-                        <p class="card-desc">An implementation exploring decentralized coordination, spatial organization, and multi-agent consensus algorithms for networked robotic units.</p>
-                    </div>
+        <section id="research" class="section" aria-labelledby="research-title">
+            <div class="section-head">
+                <h2 class="section-title" id="research-title">Research</h2>
+                <p class="section-intro">Taking published legged-robot methods apart to see what's really doing the work.</p>
+            </div>
 
-                    <div class="project-card">
-                        <div class="card-meta">
-                            <span class="card-tag">Computer Vision / ROS2</span>
-                        </div>
-                        <h3 class="card-title"><a href="projects/slam.html" class="project-title-link">Autonomous Navigation with camera-only SLAM Robot</a></h3>
-                        <p class="card-desc">Simultaneous Localization and Mapping on a mobile differential drive platform utilizing pure visual feature odometry, breaking dependency on traditional LiDAR hardware.</p>
-                    </div>
+            <div class="entries">
 
-                    <div class="project-card">
-                        <div class="card-meta">
-                            <span class="card-tag">Telemetry Bridges</span>
-                        </div>
-                        <h3 class="card-title"><a href="projects/simbridge.html" class="project-title-link">F1 Sim Rig Telemetry Bridge</a></h3>
-                        <p class="card-desc">A real-time game data parser designed to ingest high-frequency racing telemetry streams and map data straight into physical servo mixes and custom driver modules.</p>
-                    </div>
-
-                </div>
-            </section>
-
-            <section id="resume" class="content-block">
-                <div class="block-header">
-                    <h2 class="block-heading">Resume / CV</h2>
-                </div>
-                <div class="block-body">
-                    <div class="resume-wrapper">
-                        <div class="download-container">
-                            <a href="https://drive.google.com/file/d/1AUieMIezUhRojSnfZZ9DG1ku7m9eyF67/view?usp=sharing" target="_blank" class="utility-download-btn">Resume / CV</a>
+                <article class="entry">
+                    <a class="entry-thumb contain" href="projects/abs-online-adaptation.html" tabindex="-1" aria-hidden="true">
+                        <img src="assets/img/abs-stratification.png" alt="" loading="lazy">
+                    </a>
+                    <div>
+                        <h3 class="entry-title"><a href="projects/abs-online-adaptation.html">Can a robot's safety switch learn on the job?</a></h3>
+                        <p class="entry-basis">Building on <em>Agile But Safe</em> (He et al., RSS 2024) · Isaac Gym, Unitree Go1</p>
+                        <p class="entry-desc">
+                            ABS keeps a fast-running legged robot safe with a small learned "safety value" that decides
+                            when to hand control to a cautious recovery policy. It breaks when goals are farther away than
+                            anything it saw in training, so I tried retraining it online. That fixed the far-goal case
+                            (false-safe 0.97% &rarr; 0.01%) but made everyday safety about 7&times; worse. The same
+                            trade-off showed up again on a second, independently trained policy, and none of the three fixes
+                            I tried got around it.
+                        </p>
+                        <div class="entry-links">
+                            <a class="more" href="projects/abs-online-adaptation.html">Read the write-up &rarr;</a>
+                            <a href="https://github.com/1sznkaveesh/ABS" target="_blank" rel="noopener">Code</a>
+                            <a href="https://arxiv.org/abs/2401.17583" target="_blank" rel="noopener">Original paper</a>
                         </div>
                     </div>
-                </div>
-            </section>
+                </article>
 
-            <section id="contact" class="content-block">
-                <div class="block-header">
-                    <h2 class="block-heading">Contact</h2>
-                </div>
-                <div class="block-body">
-                    <div class="contact-inline-row">
-                        <a href="https://github.com/1sznkaveesh" target="_blank" class="contact-link">GITHUB</a>
-                        <a href="https://www.linkedin.com/in/kaveesh-chaudhari-2136822a4/" target="_blank" class="contact-link">LINKEDIN</a>
+                <article class="entry">
+                    <a class="entry-thumb contain" href="projects/dreamwaq.html" tabindex="-1" aria-hidden="true">
+                        <img src="assets/img/dreamwaq-kl-per-dim.png" alt="" loading="lazy">
+                    </a>
+                    <div>
+                        <h3 class="entry-title"><a href="projects/dreamwaq.html">What is DreamWaQ's "imagination" actually imagining?</a></h3>
+                        <p class="entry-basis">Reproducing <em>DreamWaQ</em> (Nahrendra et al., ICRA 2023) · Isaac Gym, Unitree Go2</p>
+                        <p class="entry-desc">
+                            DreamWaQ gives a walking robot a learned latent that is meant to capture the terrain under its
+                            feet. After reproducing it, I went looking for that terrain information and couldn't find it.
+                            The latent had collapsed to its prior (0 of 16 dimensions active), so the robot was effectively
+                            walking blind. I also tested a fix for its velocity-estimation gap. It failed the criteria I'd
+                            set in advance, so I rejected it.
+                        </p>
+                        <div class="entry-links">
+                            <a class="more" href="projects/dreamwaq.html">Read the write-up &rarr;</a>
+                            <a href="https://github.com/1sznkaveesh/DreamWaQ" target="_blank" rel="noopener">Code</a>
+                            <a href="https://arxiv.org/abs/2301.10602" target="_blank" rel="noopener">Original paper</a>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </article>
 
-        </main>
-        
-    </div>
+            </div>
+        </section>
 
-    <script src="script.js"></script>
+        <section id="projects" class="section" aria-labelledby="projects-title">
+            <div class="section-head">
+                <h2 class="section-title" id="projects-title">Projects</h2>
+                <p class="section-intro">Things I built while figuring out what I liked.</p>
+            </div>
+
+            <div class="card-grid">
+
+                <article class="card">
+                    <a class="entry-thumb" href="projects/slam.html" tabindex="-1" aria-hidden="true">
+                        <img src="assets/img/slam-rtabmap.png" alt="" loading="lazy">
+                    </a>
+                    <div class="card-body">
+                        <p class="entry-kicker">ROS 2 · RTAB-Map · Nav2</p>
+                        <h3 class="entry-title"><a href="projects/slam.html">Mapping a maze with just a camera</a></h3>
+                        <p class="entry-desc">
+                            A simulated robot in Gazebo that builds its map from a depth camera instead of LiDAR,
+                            then plans its own way around with Nav2.
+                        </p>
+                        <div class="entry-links">
+                            <a class="more" href="projects/slam.html">See how it works &rarr;</a>
+                            <a href="https://github.com/1sznkaveesh/Mobile-Differential-Drive-Robot_SLAM" target="_blank" rel="noopener">Code</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <a class="entry-thumb" href="projects/swarm.html" tabindex="-1" aria-hidden="true">
+                        <img src="assets/img/swarm-demo-poster.jpg" alt="" loading="lazy">
+                    </a>
+                    <div class="card-body">
+                        <p class="entry-kicker">Multi-agent planning · Python</p>
+                        <h3 class="entry-title"><a href="projects/swarm.html">Robots that sort out traffic among themselves</a></h3>
+                        <p class="entry-desc">
+                            A grid-world simulator where each robot plans its own path with A* and works out right of
+                            way with its neighbours at intersections. There is no central controller.
+                        </p>
+                        <div class="entry-links">
+                            <a class="more" href="projects/swarm.html">See how it works &rarr;</a>
+                            <a href="https://github.com/1sznkaveesh/Swarm_System" target="_blank" rel="noopener">Code</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <a class="entry-thumb contain" href="projects/simbridge.html" tabindex="-1" aria-hidden="true">
+                        <img src="assets/img/simrig-wiring.jpg" alt="" loading="lazy">
+                    </a>
+                    <div class="card-body">
+                        <p class="entry-kicker">Python · Arduino · Hardware</p>
+                        <h3 class="entry-title"><a href="projects/simbridge.html">A motion rig for racing games</a></h3>
+                        <p class="entry-desc">
+                            A rig that moves with the car. Python reads live telemetry from Assetto Corsa, and an
+                            Arduino drives two motors to match. Still being tuned.
+                        </p>
+                        <div class="entry-links">
+                            <a class="more" href="projects/simbridge.html">See how it works &rarr;</a>
+                            <a href="https://github.com/1sznkaveesh/F1_Sim_Rig_Bridge" target="_blank" rel="noopener">Code</a>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <section id="contact" class="section" aria-labelledby="contact-title">
+            <div class="contact-block">
+                <h2 class="section-title" id="contact-title">Say hello</h2>
+                <p class="contact-text">
+                    I'm always happy to talk about legged robots, reinforcement learning, or why an experiment didn't work.
+                    You can find me on <a href="https://www.linkedin.com/in/kaveesh-chaudhari-2136822a4/" target="_blank" rel="noopener">LinkedIn</a>,
+                    and all my code is on <a href="https://github.com/1sznkaveesh" target="_blank" rel="noopener">GitHub</a>.
+                    <!-- TODO: add your email, e.g.  Or just email me at <a href="mailto:you@example.com">you@example.com</a>. -->
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <span>&copy; 2026 Kaveesh Chaudhari</span>
+            <span><a href="https://github.com/1sznkaveesh" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/kaveesh-chaudhari-2136822a4/" target="_blank" rel="noopener">LinkedIn</a></span>
+        </div>
+    </footer>
+
 </body>
 </html>

@@ -1,6 +1,6 @@
 # BLOG_IMAGE_SOURCES.md
 
-Images used in the ABS Online Adaptation blog post (`projects/abs-online-adaptation.html`).
+Images used in the ABS Online Adaptation blog post (`projects/abs-online-adaptation.html`; images now live in `assets/img/` (abs-stratification.png, abs-iid-diag.png, abs-s5-diag.png)).
 
 ## Images Retained
 

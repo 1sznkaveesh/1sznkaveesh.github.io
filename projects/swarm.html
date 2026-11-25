@@ -3,208 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-Agent Swarm | Kaveesh</title>
+    <title>Robots That Sort Out Traffic Among Themselves | Kaveesh Chaudhari</title>
+    <meta name="description" content="A grid-based simulator for decentralized multi-agent path planning with A*, local path sharing and intersection conflict resolution.">
+    <meta name="author" content="Kaveesh Chaudhari">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232c6a58'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' font-weight='600' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400;1,8..60,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
-    <style>
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 32px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-family: var(--font-heading);
-            font-size: 14px;
-            transition: color 0.2s ease;
-        }
-        .back-btn:hover {
-            color: var(--accent);
-        }
-        .project-body-text {
-            color: var(--text-muted);
-            font-size: 15px;
-            line-height: 1.8;
-            max-width: 800px;
-        }
-        .project-body-text p {
-            margin-bottom: 24px;
-        }
-        /* Active Status Badge Style */
-        .status-badge {
-            display: inline-block;
-            background: rgba(79, 140, 255, 0.1);
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            font-family: var(--font-heading);
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 6px 14px;
-            border-radius: 4px;
-            margin-bottom: 24px;
-        }
-        .media-container {
-            margin: 32px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-            max-width: 800px;
-        }
-        .media-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-line);
-            border-radius: 8px;
-            padding: 16px;
-        }
-        .media-label {
-            font-family: var(--font-heading);
-            font-size: 12px;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-            font-weight: 700;
-        }
-        video {
-            width: 100%;
-            border-radius: 4px;
-            display: block;
-            background: #000;
-        }
-    </style>
 </head>
 <body>
 
-    <div class="app-container">
-        
-        <aside class="app-sidebar">
-            <div class="sidebar-top">
-                <div class="brand-group">
-                    <h1 class="logo-title">KAVEESH CHAUDHARI</h1>
-                </div>
-                <p class="meta-tagline">Project Breakdown.</p>
-                <nav class="app-nav">
-                    <a href="../index.html" class="nav-btn">← RETURN HOME</a>
-                </nav>
-            </div>
-        </aside>
-
-        <main class="app-main-content">
-            <article class="content-block">
-                <a href="../index.html" class="back-btn">← Back to Dashboard</a>
-                
-                <div class="block-header">
-                    <h2 class="block-heading">Multi-Agent Swarm Robotics</h2>
-                </div>
-
-                <div class="media-container">
-                    
-                    <div class="media-box">
-                        <div class="media-label">Simulation Monitor</div>
-                        <video controls preload="metadata">
-                            <source src="Screen Recording 2026-06-22 095144.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-
-                </div>
-                
-                <div class="project-body-text">
-    <div class="status-badge" style="margin-bottom: 16px;">Active Deployment / Updates Ongoing</div>
-
-    <p style="margin-bottom: 16px;">
-        This project explores decentralized path-planning and coordination algorithms tailored for multi-agent, small-scale swarm robotics. Instead of relying on a centralized controller that introduces a single point of failure and high processing overhead, this architecture empowers individual agents to execute localized grid-based pathfinding dynamically. The system is designed around discrete grid synchronization, enabling scalable multi-robot routing without large performance spikes.
-    </p>
-
-    <hr style="border: 0; border-top: 1px solid var(--border-line); margin: 20px 0;">
-
-    <h3 style="margin-top: 0; margin-bottom: 12px;">Core Architectural Components</h3>
-    <p style="margin-bottom: 16px;">
-        The system's execution pipeline is split into explicit roles to optimize how agents perceive obstacles, interact with payload nodes, and resolve intersections:
-    </p>
-    
-    <ul style="list-style-type: none; padding-left: 0; display: flex; flex-direction: column; gap: 16px; margin-bottom: 0;">
-        <li style="padding-left: 16px; border-left: 2px solid var(--accent);">
-            <strong>Track Robot Node</strong>
-            <p style="margin-top: 4px; margin-bottom: 0; font-size: 14px;">
-                Real-time kinematic path tracing where agents navigate an intersection network using local map frames. Each agent handles its own localization vector relative to its neighborhood.
-            </p>
-        </li>
-        <li style="padding-left: 16px; border-left: 2px solid var(--accent);">
-            <strong>Solid Cargo Box (Task Allocation)</strong>
-            <p style="margin-top: 4px; margin-bottom: 0; font-size: 14px;">
-                Decentralized item-to-agent pairing mechanics. Agents identify static coordinates representing tasks, negotiate entry metrics with adjacent units, and schedule physical retrieval patterns without an over-arching central dispatcher.
-            </p>
-        </li>
-        <li style="padding-left: 16px; border-left: 2px solid var(--accent);">
-            <strong>Line Target Goal</strong>
-            <p style="margin-top: 4px; margin-bottom: 0; font-size: 14px;">
-                End-point convergence management. Multi-agent streams converge onto designated workspace target points while dynamically updating cross-path priorities to avoid deadlock configurations.
-            </p>
-        </li>
-    </ul>
-
-    <hr style="border: 0; border-top: 1px solid var(--border-line); margin: 24px 0;">
-
-    <div class="media-text-container" style="display: flex; flex-direction: row; gap: 24px; align-items: center; margin-top: 32px; margin-bottom: 48px; max-width: 800px; flex-wrap: wrap;">
-        <div class="media-container" style="margin: 0; max-width: 450px; flex: 1; min-width: 300px;">
-            <div class="media-box">
-                <div class="media-label">A* Algorithm Visualization</div>
-                <img src="Spic1.jpg" alt="SMC3 Setup and Monitor Utility Dashboard Parameters" style="width: 100%; height: auto; display: block; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.05);">
-            </div>
+    <header class="site-header">
+        <div class="container">
+            <a href="../index.html" class="site-name">Kaveesh Chaudhari</a>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="../index.html#research">Research</a>
+                <a href="../index.html#projects">Projects</a>
+                <a href="https://drive.google.com/file/d/1AUieMIezUhRojSnfZZ9DG1ku7m9eyF67/view?usp=sharing" target="_blank" rel="noopener">CV</a>
+                <a href="../index.html#contact">Contact</a>
+            </nav>
         </div>
-        <div class="media-description" style="flex: 1; min-width: 280px; color: var(--text-muted); font-size: 14px; line-height: 1.6;">
-            Following shows how the A* algorithm works and how its further implemented to multiple robots.
+    </header>
+
+    <main class="container article">
+        <a href="../index.html#projects" class="back-link">&larr; Back home</a>
+
+        <p class="article-kicker">Project · Multi-agent planning</p>
+        <h1>Robots that sort out traffic among themselves</h1>
+        <p class="lede">
+            A grid-world simulator where each robot plans its own route and works out right of way with its
+            neighbours. There is no central controller telling anyone what to do.
+        </p>
+
+        <div class="article-meta">
+            <span class="status in-progress">In progress</span>
+            <span>Python · A* search</span>
+            <a href="https://github.com/1sznkaveesh/Swarm_System" target="_blank" rel="noopener">Code</a>
         </div>
-    </div>
 
-    <h3 style="margin-top: 0; margin-bottom: 12px;">Conflict Resolution & Localized Grid Consensus</h3>
-    <p style="margin-bottom: 12px;">
-        A major focus of this decentralized setup is solving intersection deadlocks. Utilizing an interactive <strong>Simulation Monitor</strong> interface, agents share their path itineraries with nearby neighbors rather than broadcasting to the whole network. 
-    </p>
-    <p style="margin-bottom: 0;">
-        When two agent trajectories cross on the coordinate plane, the units utilize localized intersection worker modes to stagger their movements seamlessly. This method optimizes routing efficiency and drastically minimizes total wait-times during simultaneous crossings.
-    </p>
+        <figure>
+            <video controls preload="metadata" playsinline poster="../assets/img/swarm-demo-poster.jpg">
+                <source src="../assets/video/swarm-demo.mp4" type="video/mp4">
+                Your browser does not support embedded video. <a href="../assets/video/swarm-demo.mp4">Download the clip</a>.
+            </video>
+            <figcaption>
+                <b>Video 1.</b> Three agents planning concurrently. Dotted lines are each agent's planned path. The runtime
+                monitor on the left reports per-agent fitness, moves, waits and turns.
+            </figcaption>
+        </figure>
 
-    <hr style="border: 0; border-top: 1px solid var(--border-line); margin: 24px 0;">
-    
-    <div class="media-container" style="margin-top: 32px;">
-        <div class="media-box">
-            <div class="media-label">A simpler visualization for understanding</div>
-            <img src="Spic2.jpg" alt="Sim Rig Electrical Wiring Schematic Arduino Motor Drivers and Potentiometers" style="width: 100%; height: auto; display: block; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.05); background: #fff;">
+        <div class="prose">
+
+            <p>
+                This project explores decentralized path planning and coordination for small-scale multi-robot systems.
+                A central controller is a single point of failure and a processing bottleneck, so here each agent runs its
+                own A* search on a shared discrete grid and coordinates only with nearby agents. The aim is multi-robot
+                routing that scales without large spikes in computation.
+            </p>
+
+            <h2 id="components">Components</h2>
+
+            <p>The simulator exposes three interaction modes for setting up a scenario:</p>
+
+            <ul class="components">
+                <li>
+                    <strong>Robot nodes</strong>
+                    Agents that plan and follow paths through the grid in their own local frame, each tracking its
+                    position relative to its neighbourhood.
+                </li>
+                <li>
+                    <strong>Cargo boxes (task allocation)</strong>
+                    Static task locations. Agents pair themselves with tasks by negotiating with adjacent agents, without
+                    a central dispatcher.
+                </li>
+                <li>
+                    <strong>Target goals</strong>
+                    Destination points that multiple agents converge on, with crossing priorities updated on the fly to
+                    avoid deadlock.
+                </li>
+            </ul>
+
+            <h2 id="conflicts">Conflict resolution</h2>
+
+            <p>
+                The main problem is deadlock at intersections. Instead of broadcasting to the whole network, agents share
+                their planned paths only with nearby agents. When two planned trajectories cross, the agents involved
+                stagger their movements, with one waiting while the other passes. This reduces total waiting time during
+                simultaneous crossings.
+            </p>
+
+            <h2 id="metrics">Runtime metrics</h2>
+
+            <p>A live monitor tracks each agent so the planner's behaviour can be measured and tuned:</p>
+
+            <ul class="components">
+                <li>
+                    <strong>Fitness score</strong>
+                    A per-agent score based on path efficiency, energy use and whether the agent reached its goal.
+                </li>
+                <li>
+                    <strong>Moves, waits and turns</strong>
+                    Counted per agent. Wait counts in particular give direct feedback on how well the local
+                    prioritization rules are working.
+                </li>
+            </ul>
+
         </div>
-    </div>
 
-    <h3 style="margin-top: 0; margin-bottom: 12px;">Runtime Monitoring & Optimization Metrics</h3>
-    <p style="margin-bottom: 16px;">
-        To analyze the efficiency of the underlying pathfinding matrix, the system features a live tracking engine that monitors multi-agent performance using key metrics:
-    </p>
+        <div class="article-end">
+            <a class="btn btn-primary" href="https://github.com/1sznkaveesh/Swarm_System" target="_blank" rel="noopener">Code on GitHub</a>
+            <a class="btn" href="../index.html#projects">&larr; Back home</a>
+        </div>
+    </main>
 
-    <ul style="list-style-type: none; padding-left: 0; display: flex; flex-direction: column; gap: 16px; margin-bottom: 0;">
-        <li style="padding-left: 16px; border-left: 2px solid var(--accent);">
-            <strong>Fitness Scores</strong>
-            <p style="margin-top: 4px; margin-bottom: 0; font-size: 14px;">
-                A performance metric calculated per agent based on path efficiency, energy usage, and successful goal navigation. High-efficiency paths retain a higher fitness ceiling.
-            </p>
-        </li>
-        <li style="padding-left: 16px; border-left: 2px solid var(--accent);">
-            <strong>Kinematic Resource Constraints</strong>
-            <p style="margin-top: 4px; margin-bottom: 0; font-size: 14px;">
-                The software continuously tracks individual agent <em>Moves</em>, <em>Waits</em>, and <em>Turns</em>. Measuring wait states provides direct feedback on the pathfinder's efficiency, allowing for iterative tuning of local prioritization behaviors.
-            </p>
-        </li>
-    </ul>
-</div>
-
-                <div style="margin-top: 24px;">
-                    <a href="https://github.com/1sznkaveesh/Swarm_System" target="_blank" class="utility-download-btn">To GitHub</a>
-                </div>
-            </article>
-        </main>
-        
-    </div>
+    <footer class="site-footer">
+        <div class="container">
+            <span>&copy; 2026 Kaveesh Chaudhari</span>
+            <span><a href="https://github.com/1sznkaveesh" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/kaveesh-chaudhari-2136822a4/" target="_blank" rel="noopener">LinkedIn</a></span>
+        </div>
+    </footer>
 
 </body>
 </html>
